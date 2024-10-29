@@ -1,10 +1,11 @@
-# Nombre del juego (<- borrar y completar)
+# A definir un nombre (<- borrar y completar)
 
 ## Equipo de desarrollo
 
-- Alguien
-- Persona
-- etc.
+- Facundo Torres
+- Pablo Cortese
+- Milagro Carucci
+- Diego Brauer
 
 ## Capturas
 
@@ -12,11 +13,11 @@
 
 ## Reglas de Juego / Instrucciones
 
-(Escribirlas)
+Un juego que transcurre en un calabozo el cual el personaje debe intentar escapar de el, para esto debera pelear por su vida.
 
 
 ## Otros
 
-- Curso/Facultad
+- UnaHur
 - Versión de wollok
 - Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado
