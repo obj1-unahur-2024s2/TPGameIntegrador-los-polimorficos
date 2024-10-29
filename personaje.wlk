@@ -1,6 +1,6 @@
 object coco {
   var vida = 100
-  var property position = game.at(0,3)
+  var property position = game.at(0,4)
 
   method image() = "coco1.png"
 
