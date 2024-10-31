@@ -1,6 +1,7 @@
 object coco {
   var vida = 100
-  var property position = game.at(0,4)
+  var property position = game.at(1,9)
+  //[15, 9] y [15, 8] puerta de salida
 
   method image() = "coco1.png"
 

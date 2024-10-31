@@ -1,3 +1,4 @@
+import extras.*
 import wollok.game.*
 import niveles.*
 import personaje.*
@@ -7,10 +8,7 @@ program CalabozoGame {
   	game.height(16)
   	game.cellSize(32)
   	game.title("Juego")
-	// add assets in asset folder, for example, for the background
-  // game.boardGround("fondo2.jpg")
 
-	
 	game.boardGround("fondo1.jpg")
 	nivel1.iniciar()
 	game.showAttributes(coco) //Debug
