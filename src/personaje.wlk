@@ -2,7 +2,7 @@ import extras.*
 
 object coco {
   var vida = 100
-  var property arma = armaMano
+  //var property arma = armaMano
   var property position = game.at(1,9)
   //[15, 9] y [15, 8] puerta de salida
 
@@ -16,14 +16,14 @@ object coco {
     vida = 0.min(vida - ataque)
   }
 
-  method ponerArma(armaAPoner) {
-    arma = armaAPoner
-  }
-  method rotarArma() {
-    arma = arma.siguiente()
-  }
+  //method ponerArma(armaAPoner) {
+    //arma = armaAPoner
+  //}
+  //method rotarArma() {
+  //  arma = arma.siguiente()
+  //}
 
-  method hacerDanio() {
+  method atacar() {
     
   }
 
@@ -34,13 +34,14 @@ object coco {
   method  murio() = vida == 0
 }
 
-object armaMano {
-  method siguiente() = armaDistancia
-  method image() = "armaDistancia.png"
-  var property position = game.colliders(coco)
-}
-object armaDistancia {
-  method siguiente() = armaMano
-  method image() = "armaMano.png"
-  var property position = game.colliders(coco)
-}
+
+//object armaMano {
+ // method siguiente() = armaDistancia
+ // method image() = "armaDistancia.png" //tengo imagenes del personaje con distintas armas
+  //var property position = game.colliders(coco)
+//}
+//object armaDistancia {
+ // method siguiente() = armaMano
+ // method image() = "armaMano.png"
+  //var property position = game.colliders(coco)
+//}
