@@ -1,8 +1,8 @@
 import personaje.*
 import game.*
 class Monstruo{
-    //var vida = 100
-    //var property estaVivo = true
+    var vida = 100
+    var property estaVivo = true
     var property fuerza = 10
     var property position = game.at(x, y)
     const x = (0.. game.width()-1).anyOne()
@@ -11,7 +11,7 @@ class Monstruo{
     var pos = 0
 
     method image() = imagen
-
+    method vida() = vida
 
     method perseguirPersonaje(){
         const caminarDer = ["slayerCaminaDer1.png", "slayerCaminaDer2.png", "slayerCaminaDer3.png", "slayerCaminaDer4.png","slayerCaminaDer1.png"]
@@ -20,9 +20,9 @@ class Monstruo{
             position = self.perseguirEnDireccionY()
             position = self.perseguirEnDireccionX()
             if (self.perseguirEnDireccionX() == position.right(1))
-                game.onTick(700, "animacionDelCanibal", {imagen = self.animacionCaminar(caminarDer)})
+                game.onTick(900, "animacionDelCanibal", {imagen = self.animacionCaminar(caminarDer)})
             else
-                game.onTick(700, "animacionDelCanibal", {imagen = self.animacionCaminar(caminarIzq)})
+                game.onTick(900, "animacionDelCanibal", {imagen = self.animacionCaminar(caminarIzq)})
     }
 
     method animacionCaminar(listaAnimacion){
@@ -49,13 +49,14 @@ class Monstruo{
         return mover
     }    
 
-   // method recibirAtaque(ataque){
-      //     vida = 0.min(vida - (ataque / 2))
+    //method recibirAtaque(ataque){
+    //    if (coco.arma() == armaMano) {
+    //        vida = 0.min(vida - (ataque / 2))
     //    }
-      //  else {
-     //       vida = 0.min(vida - ataque)
-     //   }
-   // }
+    //    else {
+    //        vida = 0.min(vida - ataque)
+    //    }
+    //}
 
    method atacar() {
      game.whenCollideDo(self, {jugador => self.atacarJugador(jugador)})
