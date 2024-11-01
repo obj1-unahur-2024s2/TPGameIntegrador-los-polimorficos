@@ -4,12 +4,16 @@ import niveles.*
 import personaje.*
 
 program CalabozoGame {
-	game.width(16)
-  	game.height(16)
-  	game.cellSize(32)
-  	game.title("Juego")
 
-	game.boardGround("fondo1.jpg")
+	game.width(16)
+    game.height(16)
+	game.cellSize(32)
+	game.title("Juego")
+
+	game.boardGround("fondo1.png")
+	if (nivel1.resultado()) {
+		nivel2.iniciar()
+	}
 	nivel1.iniciar()
 	game.showAttributes(coco) //Debug
 

@@ -4,7 +4,7 @@
 
 - Facundo Torres
 - Pablo Cortese
-- Milagro Carucci
+- Milagros Carucci
 - Diego Brauer
 
 ## Capturas

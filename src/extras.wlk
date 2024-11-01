@@ -1,5 +1,7 @@
 import personaje.*
 class Monstruo{
+    var vida = 100
+    var property estaVivo = true
     var property position = game.at(x, y)
     var x = (0.. game.width()-1).anyOne()
     var y = (0.. game.height()-1).anyOne()
@@ -13,17 +15,26 @@ class Monstruo{
 
     method perseguirEnDireccionX(){
         if(coco.position().x() > self.position().x())
-         x =+ 1 
+            x =+ 1 
         else if(coco.position().x() < self.position().x()) 
-         x -= 1
+            x -= 1
         return x
     } 
 
     method perseguirEnDireccionY(){
         if(coco.position().y() > self.position().y())
-         y =+ 1 
+            y =+ 1 
         else if(coco.position().y() < self.position().y()) 
-         y -= 1
+            y -= 1
         return y
     }    
+
+    method recibirAtaque(ataque){
+        if (coco.arma() == armaMano) {
+            vida = 0.min(vida - (ataque / 2))
+        }
+        else {
+            vida = 0.min(vida - ataque)
+        }
+    }
 }
