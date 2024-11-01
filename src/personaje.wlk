@@ -8,6 +8,7 @@ object coco {
 
   method image() = "coco1.png"
 
+
   method irA(nuevaPosicion) {
 		position = nuevaPosicion
 	}
@@ -31,7 +32,12 @@ object coco {
     vida = 100.max(vida + 25)
   }
 
-  method  murio() = vida == 0
+  method murio() = vida == 0
+  method morir() {
+    if(self.murio()){
+      game.removeVisual(self)
+    }
+  }
 }
 
 

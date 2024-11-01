@@ -3,6 +3,7 @@ import game.*
 class Monstruo{
     //var vida = 100
     //var property estaVivo = true
+    var property fuerza = 10
     var property position = game.at(x, y)
     const x = (0.. game.width()-1).anyOne()
     const y = (0.. game.height()-1).anyOne()
@@ -55,4 +56,12 @@ class Monstruo{
      //       vida = 0.min(vida - ataque)
      //   }
    // }
+
+   method atacar() {
+     game.whenCollideDo(self, {jugador => self.atacarJugador(jugador)})
+    }
+
+   method atacarJugador(jugador) {
+     jugador.recibirAtaque(fuerza)
+   }
 }
