@@ -1,34 +1,33 @@
 import personaje.*
 import game.*
 class Monstruo{
-    var vida = 100
+    //var vida = 100
     var property estaVivo = true
     var property fuerza = 10
     var property position = game.at(x, y)
     const x = (0.. game.width()-1).anyOne()
     const y = (0.. game.height()-1).anyOne()
-    var imagen = "monstruo.png"
-    var pos = 0
+    var dir = "Izq"
+    var pos = 1
 
-    method image() = imagen
-    method vida() = vida
+    method image() = "slayerCamina" + dir + pos + ".png"
+    //method vida() = vida
 
     method perseguirPersonaje(){
-        const caminarDer = ["slayerCaminaDer1.png", "slayerCaminaDer2.png", "slayerCaminaDer3.png", "slayerCaminaDer4.png","slayerCaminaDer1.png"]
-        const caminarIzq = ["slayerCaminaIzq1.png", "slayerCaminaIzq2.png", "slayerCaminaIzq3.png", "slayerCaminaIzq4.png", "slayerCaminaIzq1.png"]
         if (self.position() != coco.position())
             position = self.perseguirEnDireccionY()
             position = self.perseguirEnDireccionX()
+            game.onTick(300, "animacionDelCanibal", {self.animacionCaminar()})
             if (self.perseguirEnDireccionX() == position.right(1))
-                game.onTick(900, "animacionDelCanibal", {imagen = self.animacionCaminar(caminarDer)})
+                dir = "Der"
             else
-                game.onTick(900, "animacionDelCanibal", {imagen = self.animacionCaminar(caminarIzq)})
+                dir = "Izq"
     }
 
-    method animacionCaminar(listaAnimacion){
+    method animacionCaminar(){
         pos +=1
-        if (pos == 5) pos = 0
-        return listaAnimacion.get(pos)
+        if (pos == 5) pos = 1
+        return pos
     }
 
     method perseguirEnDireccionX(){
