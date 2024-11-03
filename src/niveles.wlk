@@ -7,7 +7,7 @@ object nivel1{
         game.addVisualCharacter(coco)
         game.addVisual(monstruo1)
         game.onTick(1000, "perseguirPersonaje", {monstruo1.perseguirPersonaje()})
-       // config.configurarTeclas()
+        config.configurarTeclas()
     }
     
 }
@@ -27,8 +27,15 @@ object nivel1{
   //  }
 //}
 
-//object config {
-  //     keyboard.e().onPressDo({coco.hacerDanio()})
-  //     keyboard.r().onPressDo({coco.rotarArma()})
-   // }
-//}
+object config {
+  method configurarTeclas() {
+    self.atacarAMonstruo()
+  }
+
+  method atacarAMonstruo() {
+   keyboard.e().onPressDo({coco.atacar()})
+   
+  }
+  //keyboard.r().onPressDo({coco.rotarArma()})
+   
+}
