@@ -5,17 +5,21 @@ object coco {
   var property arma = armaMano
   var property position = game.at(1,9)
   //[15, 9] y [15, 8] puerta de salida
+  var imagen = "cocoEspada" // para poder cambiar a animacion de movimiento
   var mov = 0
 
-  method image() = "cocoEspada" + mov +".png"
+  method image() = imagen + mov + ".png"
 
   method atacar() {
-    game.onTick(250, "movimientos", {self.movimiento()})
+    game.onTick(250, "ataque", {self.movimiento()})
   }
 
   method movimiento() {
     mov += 1
-    if(mov == 7){mov = 1}
+    if(mov == 7){
+      mov = 0
+      game.removeTickEvent("ataque")
+    }
     return mov
   }
 

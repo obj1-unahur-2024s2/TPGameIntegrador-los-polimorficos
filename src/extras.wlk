@@ -16,7 +16,7 @@ class Monstruo{
         if (self.position() != coco.position())
             position = self.perseguirEnDireccionY()
             position = self.perseguirEnDireccionX()
-            game.onTick(300, "animacionDelCanibal", {self.animacionCaminar()})
+            game.onTick(700, "animacionDelCanibal", {self.animacionCaminar()})
             if (self.perseguirEnDireccionX() == position.right(1))
                 dir = "Der"
             else
