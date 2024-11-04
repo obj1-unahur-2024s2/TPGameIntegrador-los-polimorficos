@@ -11,10 +11,10 @@ object coco {
   method image() = imagen + mov + ".png"
 
   method atacar() {
-    game.onTick(250, "ataque", {self.movimiento()})
+    game.onTick(250, "ataque", {self.animacionEspada()})
   }
 
-  method movimiento() {
+  method animacionEspada() {
     mov += 1
     if(mov == 7){
       mov = 0
@@ -23,7 +23,12 @@ object coco {
     return mov
   }
 
-  method irA(nuevaPosicion) {position = nuevaPosicion}
+  method irA(nuevaPosicion) {
+    const posicionActualX = self.position().x()
+    position = nuevaPosicion
+    if (posicionActualX == position.x())
+      imagen = "cocoCaminarDer"
+  }
 
   method recibirAtaque(ataque){vida = 0.min(vida - ataque)}
 
