@@ -7,6 +7,7 @@ object nivel1{
         game.addVisualCharacter(coco)
         game.addVisual(monstruo1)
         config.configurarTeclas()
+        //config.cocoMuere()
         monstruo1.caminar(1300)
     }
 
@@ -35,6 +36,18 @@ object config {
 
   method atacarAMonstruo() {
    keyboard.e().onPressDo({coco.atacar()})
+  }
+
+  // method cocoMuere() {
+  //   if(!coco.estaVivo()){
+  //     game.removeVisual(coco)
+  //   }
+  // }
+
+  method monstruoMuere() {
+    if(!Monstruo.estaVivo()){
+      game.removeVisual(Monstruo)
+    }
   }
   //keyboard.r().onPressDo({coco.rotarArma()})
    
