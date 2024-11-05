@@ -6,9 +6,8 @@ object nivel1{
     method iniciar(){
         game.addVisualCharacter(coco)
         game.addVisual(monstruo1)
-        game.onTick(1200, "perseguirPersonaje", {monstruo1.perseguirPersonaje()})
         config.configurarTeclas()
-        
+        monstruo1.caminar(1300)
     }
 
     

@@ -12,6 +12,10 @@ class Monstruo{
 
     method image() = "slayerCamina" + dir + pos + ".png"
 
+    method caminar(velocidad){
+        game.onTick(velocidad, "perseguirPersonaje", {self.perseguirPersonaje()})
+    }
+
     method perseguirPersonaje(){
         if (self.position() != coco.position())
             position = self.perseguirEnDireccionY()
