@@ -2,7 +2,6 @@ import extras.*
 
 object coco {
   var vidas = 3
-  var property arma = armaMano
   var property position = game.at(1,9)
   //[15, 9] y [15, 8] puerta de salida
   var imagen = "Espada" // para poder cambiar a animacion de movimiento
@@ -27,19 +26,26 @@ object coco {
 
   method perderVida() {
     vidas -= 1
+    Vidas.perderVida()
   }
 
   method estaVivo() = vidas > 0
 }
 
 
-object armaMano {
-//  method siguiente() = armaDistancia
- method image() = "armaDistancia.png" //tengo imagenes del personaje con distintas armas
-  var property position = game.colliders(coco)
+class Vidas{
+  var property position = game.at(x, y)
+  var x
+  var y
+  var imagen = "corazon.png"
+
+  method image() = imagen
+
+  method perderVida(){
+    imagen = "corazonMuerto.png"
+  }
+
+  method recuperarVida(){
+    imagen = "corazon.png"
+  }
 }
-//object armaDistancia {
- // method siguiente() = armaMano
- // method image() = "armaMano.png"
-  //var property position = game.colliders(coco)
-//}

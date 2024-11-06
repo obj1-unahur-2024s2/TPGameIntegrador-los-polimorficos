@@ -9,8 +9,18 @@ object nivel1{
         config.configurarTeclas()
         //config.cocoMuere()
         monstruo1.caminar(1300)
+        self.vidas()
     }
 
+    method vidas(){
+      const vida3 = new Vidas(x=15, y=15)
+      const vida2 = new Vidas(x=14, y=15)
+      const vida1 = new Vidas(x=13, y=15)
+      game.addVisual(vida3)
+      game.addVisual(vida2)
+      game.addVisual(vida1)
+
+    }
     
 }
 //object nivel2{
