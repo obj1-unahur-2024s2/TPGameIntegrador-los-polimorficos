@@ -12,8 +12,6 @@ object coco {
   method atacar() {game.onTick(250, "ataque", {self.animacionEspada()})}
   method irA(nuevaPosicion) {position = nuevaPosicion}
 
-
-
   method animacionEspada() {
     imagen = "Espada"
     mov += 1
@@ -21,6 +19,7 @@ object coco {
       mov = 0
       game.removeTickEvent("ataque")
     }
+    Monstruo.recibirAtaque()
     return mov
   }
 
