@@ -19,7 +19,6 @@ object coco {
       mov = 0
       game.removeTickEvent("ataque")
     }
-    Monstruo.recibirAtaque()
     return mov
   }
 

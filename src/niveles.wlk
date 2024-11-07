@@ -9,6 +9,7 @@ object nivel1{
         config.configurarTeclas()
         monstruo1.caminar(1300)
         self.vidas()
+        game.whenCollideDo(monstruo1, {m => m.recibirAtaque()})
     }
 
     method vidas(){
@@ -47,7 +48,4 @@ object config {
    keyboard.e().onPressDo({coco.atacar()})
    
   }
-
-  //keyboard.r().onPressDo({coco.rotarArma()})
-   
 }
