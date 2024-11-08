@@ -1,7 +1,8 @@
 import extras.*
 
 object coco {
-  var vidas = 3
+  var vidas = 100
+  method vidas() = vidas 
   var property position = game.at(1,9)
   //[15, 9] y [15, 8] puerta de salida
   var imagen = "Espada" // para poder cambiar a animacion de movimiento
@@ -26,11 +27,8 @@ object coco {
     vidas -= 1
     Vidas.perderVida()
   }
-
   method estaVivo() = vidas > 0
 }
-
-
 class Vidas{
   var property position = game.at(x, y)
   var x

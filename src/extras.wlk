@@ -1,7 +1,7 @@
 import personaje.*
 import game.*
 class Monstruo{
-    var vida = 1
+    var vida = 3
     var property position = game.at(x, y)
     const x = (0.. game.width()-1).anyOne()
     const y = (0.. game.height()-1).anyOne()
