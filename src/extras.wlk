@@ -12,6 +12,13 @@ class Monstruo{
 
     method caminar(velocidad){
         game.onTick(velocidad, "perseguirPersonaje", {self.perseguirPersonaje()})
+        self.morir()
+    }
+
+    method morir() {
+      if(self.estaMuerto()){
+        game.removeTickEvent("perseguirPersonaje")
+      }
     }
 
     method perseguirPersonaje(){
@@ -48,14 +55,7 @@ class Monstruo{
             mover = mover.down(1)
         return mover
     }    
-    method estaVivo() = vida == 0
-
-    method recibirAtaque() {
-        vida -= 0.05
-    }
-
-    method monstruoMuere() {
-        
-    }
+    method estaMuerto() = vida == 0
+    method recibirAtaque() {vida = 0.max(vida - 0.05)}
 
 }

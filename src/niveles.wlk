@@ -14,6 +14,9 @@ object nivel1{
 
     monstruo1.caminar(1300)
     monstruo2.caminar(1100)
+    self.muerteDeMostruo(monstruo2)
+    self.muerteDeMostruo(monstruo1)
+
     self.vidas()
     game.whenCollideDo(monstruo1, {m => m.perderVida()})
     game.whenCollideDo(monstruo2, {m => m.perderVida()})
@@ -22,9 +25,9 @@ object nivel1{
 
   }
 
-  method muerteDeMostruo() {
-    if(monstruo1.estaVivo()){
-      game.removeVisual(monstruo1)
+  method muerteDeMostruo(enemigo) {
+    if(enemigo.estaMuerto()){
+      game.removeVisual(enemigo)
     }
   }
 
