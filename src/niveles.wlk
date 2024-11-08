@@ -3,15 +3,20 @@ import personaje.*
 import extras.*
 object nivel1{
   const monstruo1 = new Monstruo()
+  const monstruo2 = new Monstruo()
   method iniciar(){
     game.addVisualCharacter(coco)
     game.addVisual(monstruo1)
 
-    config.configurarTeclas()
+    game.addVisual(monstruo2)
+
+    config.atacarAMonstruo()
     monstruo1.caminar(1300)
+    monstruo2.caminar(1100)
     self.vidas()
     game.whenCollideDo(monstruo1, {m => m.perderVida()})
-    game.whenCollideDo(coco, {m => m.recibirAtaque()})
+    game.whenCollideDo(monstruo2, {m => m.perderVida()})
+    // game.whenCollideDo(coco, {m => m.recibirAtaque()})
 
   }
 
@@ -49,11 +54,10 @@ object nivel1{
 //}
 
 object config {
-  method configurarTeclas() {
-    self.atacarAMonstruo()
-  }
-
   method atacarAMonstruo() {
-   keyboard.e().onPressDo({coco.atacar()})
+   keyboard.e().onPressDo({
+    coco.atacar()
+    game.whenCollideDo(coco, {m => m.recibirAtaque()})
+    })
   }
 }

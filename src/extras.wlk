@@ -51,14 +51,11 @@ class Monstruo{
     method estaVivo() = vida == 0
 
     method recibirAtaque() {
-        vida -= 1
+        vida -= 0.25
     }
 
     method monstruoMuere() {
-    if(!self.estaVivo()){
-      game.removeVisual(Monstruo)
+        
     }
-  }
-    method atacar() {game.whenCollideDo(coco, {jugador => self.atacarJugador(jugador)})}
-    method atacarJugador(jugador) {jugador.perderVida()}
+
 }
