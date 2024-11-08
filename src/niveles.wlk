@@ -7,16 +7,18 @@ object nivel1{
   method iniciar(){
     game.addVisualCharacter(coco)
     game.addVisual(monstruo1)
-
     game.addVisual(monstruo2)
 
     config.atacarAMonstruo()
+    config.consultarVida()
+
     monstruo1.caminar(1300)
     monstruo2.caminar(1100)
     self.vidas()
     game.whenCollideDo(monstruo1, {m => m.perderVida()})
     game.whenCollideDo(monstruo2, {m => m.perderVida()})
     // game.whenCollideDo(coco, {m => m.recibirAtaque()})
+
 
   }
 
@@ -58,6 +60,12 @@ object config {
    keyboard.e().onPressDo({
     coco.atacar()
     game.whenCollideDo(coco, {m => m.recibirAtaque()})
+    })
+  }
+
+  method consultarVida() {
+    keyboard.q().onPressDo({
+      game.say(coco, "mi vida es " + coco.vidas())
     })
   }
 }

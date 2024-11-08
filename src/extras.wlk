@@ -51,7 +51,7 @@ class Monstruo{
     method estaVivo() = vida == 0
 
     method recibirAtaque() {
-        vida -= 0.25
+        vida -= 0.05
     }
 
     method monstruoMuere() {
