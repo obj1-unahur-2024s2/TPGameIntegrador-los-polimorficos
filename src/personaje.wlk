@@ -24,15 +24,15 @@ object coco {
   }
 
   method perderVida() {
-    vidas -= 0.01
+    vidas -= 0.02
     Vidas.perderVida()
   }
   method estaVivo() = vidas > 0
 }
 class Vidas{
   var property position = game.at(x, y)
-  var x
-  var y
+  const x
+  const y
   var imagen = "corazon.png"
 
   method image() = imagen

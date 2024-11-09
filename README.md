@@ -15,6 +15,12 @@
 
 Un juego que transcurre en un calabozo el cual el personaje debe intentar escapar de el, para esto debera pelear por su vida.
 
+## Controles
+
+- "e" para atacar a los enemigos, los enemigos tienen que estar cerca del personaje para recibir el daño.
+
+- "q" se usa para preguntar la vida del jugador en el momento.
+
 
 ## Otros
 

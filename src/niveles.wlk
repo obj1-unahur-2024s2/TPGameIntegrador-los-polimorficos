@@ -40,7 +40,7 @@ object nivel1{
     game.addVisual(vida1)
 
   }
-    
+
 }
 //object nivel2{
     //const monstruo1 = new Monstruo()
