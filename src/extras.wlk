@@ -57,5 +57,11 @@ class Monstruo{
     }    
     method estaMuerto() = vida == 0
     method recibirAtaque() {vida = 0.max(vida - 0.05)}
+}
 
+object imagenInicial{ 
+    var property position = game.at(0, 0)
+     var property image = "fondoInicio.png" 
+     //Ahi termine de hacer la imagen base para el inicio.
+     //Despues hago que aparezca al principio como pantalla de inicio, que ahora estoy cansado.
 }
