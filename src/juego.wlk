@@ -1,8 +1,88 @@
 import personaje.*
 import extras.*
+import niveles.*
 
+const monstruosNivel1 =  (0..2).map({num => new Monstruo()})
+const monstruosNivel2 =  (0..2).map({num => new Monstruo()})
 object juego{
-    var nivelActual = 0 
+  var nivelActual = 0 
+  var nivelIniciado = false
+
+  method nivelIniciado() = nivelIniciado
+  method nivelActual() = nivelActual
+  method nivelIniciado(estaIniciado){nivelIniciado = estaIniciado}
+
+  method iniciarJuego(){
+    self.prepararPantallaDeInicio()
+    keyboard.space().onPressDo{
+      if(!self.nivelIniciado())
+        game.removeVisual(imagenInicial)//Hacer lo de la imagen inicial
+        nivelActual = 1
+        self.prepararJuego()
+        self.nivelIniciado(true)
+    }
+  }
+
+  method prepararPantallaDeInicio(){
+    game.title("CocoAdventure")
+    game.width(16)
+    game.height(16)
+	  game.cellSize(32)
+    game.boardGround("fondo.jpg")//fondo.jpg
+    game.addVisual(imagenInicial)
+  }
+
+  method prepararJuego(){
+    game.title("CocoAdventure")
+    game.width(16)
+    game.height(16)
+	  game.cellSize(32)
+    self.crearNivel(nivel1)
+  }
+
+  method crearNivel(nivel){
+    game.addVisual(nivel.image()) // Crear en un archivo aparte que contenga la clase nivel
+    game.addVisualCharacter(coco)
+    self.crearVidas()
+    self.perseguirACoco(self.nivelActual()) //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
+    self.configurarTeclado()
+    self.agregarBloques(nivel) // Crear los bloques por donde no puede pasar el personaje
+  }
+
+  method crearVidas(){
+    const vida3 = new Vidas(x=15, y=15)
+    const vida2 = new Vidas(x=14, y=15)
+    const vida1 = new Vidas(x=13, y=15)
+    game.addVisual(vida3)
+    game.addVisual(vida2)
+    game.addVisual(vida1)
+  }
+
+  method perseguirACoco(monstruoNivel){
+    //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
+  }
+
+  method configurarTeclado(){
+    self.atacarAMonstruo()
+    self.consultarVida()
+  }
+
+  method atacarAMonstruo() {
+   keyboard.e().onPressDo({
+    coco.atacar()
+    game.whenCollideDo(coco, {m => m.recibirAtaque()})
+    })
+  }
+
+  method consultarVida() {
+    keyboard.q().onPressDo({
+      game.say(coco, "mi vida es " + coco.vidas())
+    })
+  }
+
+  method agregarBloques(nivel){
+    // Crear los bloques por donde no puede pasar el personaje de cada nivel
+  }
     //Aca va a estar toda la logica de el juego
     //Pantalla de inicio, pantalla de game over
     //Limpiar los visuales al cambiar de nivel, poder cambiar de nivel al ir a la puerta

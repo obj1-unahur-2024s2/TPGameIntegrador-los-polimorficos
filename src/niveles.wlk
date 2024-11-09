@@ -1,74 +1,28 @@
 import wollok.game.*
 import personaje.*
 import extras.*
-object nivel1{
-  const monstruo1 = new Monstruo()
-  const monstruo2 = new Monstruo()
-  method iniciar(){
-    game.addVisualCharacter(coco)
-    game.addVisual(monstruo1)
-    game.addVisual(monstruo2)
+import juego.*
 
-    config.atacarAMonstruo()
-    config.consultarVida()
-
-    monstruo1.caminar(1300)
-    monstruo2.caminar(1100)
-    self.muerteDeMostruo(monstruo2)
-    self.muerteDeMostruo(monstruo1)
-
-    self.vidas()
-    game.whenCollideDo(monstruo1, {m => m.perderVida()})
-    game.whenCollideDo(monstruo2, {m => m.perderVida()})
-    // game.whenCollideDo(coco, {m => m.recibirAtaque()})
-
-
-  }
-
-  method muerteDeMostruo(enemigo) {
-    if(enemigo.estaMuerto()){
-      game.removeVisual(enemigo)
-    }
-  }
-
-  method vidas(){
-    const vida3 = new Vidas(x=15, y=15)
-    const vida2 = new Vidas(x=14, y=15)
-    const vida1 = new Vidas(x=13, y=15)
-    game.addVisual(vida3)
-    game.addVisual(vida2)
-    game.addVisual(vida1)
-
-  }
-    
+const nivel1 = new Nivel(nivel=1, enemigos = monstruosNivel1, bloquesMapa = bloquesMapa1, image = fondoNivel1, sonidoNivel = "despues") //crear todo lo que va adentro
+const nivel2 = new Nivel(nivel = 2, enemigos = monstruosNivel2, bloquesMapa = bloquesMapa2, image = fondoNivel2, sonidoNivel = "despues") //crear todo lo que va adentro
+const todosLosNiveles = [nivel1, nivel2]
+class Nivel{
+  var property position = game.center()
+  var property image
+  const property nivel
+  var property enemigos
+  const property sonidoNivel
+  var property bloquesMapa
 }
-//object nivel2{
-    //const monstruo1 = new Monstruo()
-   // var property resultado = false
-   // method iniciar(){
-    //    game.addVisualCharacter(coco)
-   //     game.addVisual(monstruo1)
-    //    game.onTick(200, "perseguirPersonaje", {monstruo1.perseguirPersonaje()})
-    //    config.configurarTeclas()
-   // }
-   // method superarNivel() {
-    //    if (!monstruo1.estaVivo()) {
-     //       resultado = true
-     //   }
-  //  }
-//}
 
-object config {
-  method atacarAMonstruo() {
-   keyboard.e().onPressDo({
-    coco.atacar()
-    game.whenCollideDo(coco, {m => m.recibirAtaque()})
-    })
-  }
+const bloquesMapa1 = new Bloques(bloquesMapa=[[1, 1], [], [], []],
+nivel = 1
+)
+const bloquesMapa2 = new Bloques(bloquesMapa = [[], [], []],
+nivel = 2
+)
 
-  method consultarVida() {
-    keyboard.q().onPressDo({
-      game.say(coco, "mi vida es " + coco.vidas())
-    })
-  }
+class Bloques{
+  const property bloquesMapa = []
+  const property nivel
 }

@@ -10,7 +10,7 @@ class Monstruo{
 
     method image() = if(vida >= 1)"slayerCamina" + dir + pos + ".png" else "corazonMuerto.png"
 
-    method caminar(velocidad){
+    method perseguirACoco(velocidad){
         game.onTick(velocidad, "perseguirPersonaje", {self.perseguirPersonaje()})
         self.morir()
     }
@@ -64,4 +64,14 @@ object imagenInicial{
      var property image = "fondoInicio.png" 
      //Ahi termine de hacer la imagen base para el inicio.
      //Despues hago que aparezca al principio como pantalla de inicio, que ahora estoy cansado.
+}
+
+object fondoNivel1{
+    var property position = game.center()
+    var property image = "fondo1.png" 
+}
+
+object fondoNivel2{
+    var property position = game.center()
+    var property image = "fondo2.png" //proximamente
 }
