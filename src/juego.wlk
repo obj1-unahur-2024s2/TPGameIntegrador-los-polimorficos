@@ -2,7 +2,7 @@ import personaje.*
 import extras.*
 import niveles.*
 
-const monstruosNivel1 =  (0..2).map({num => new Monstruo()})
+const monstruosNivel1 =  [new Monstruo(),  new Monstruo()]
 const monstruosNivel2 =  (0..2).map({num => new Monstruo()})
 object juego{
   var nivelActual = 0 
@@ -28,7 +28,7 @@ object juego{
     game.width(16)
     game.height(16)
 	  game.cellSize(32)
-    game.boardGround("fondo.jpg")//fondo.jpg
+    game.boardGround("fondoNegro1.jpg")//fondo.jpg
     game.addVisual(imagenInicial)
   }
 
@@ -44,8 +44,8 @@ object juego{
     game.addVisual(nivel.image()) // Crear en un archivo aparte que contenga la clase nivel
     game.addVisualCharacter(coco)
     self.crearVidas()
-    self.perseguirACoco(self.nivelActual()) //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
     self.configurarTeclado()
+    self.perseguirACoco(nivel) //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
     self.agregarBloques(nivel) // Crear los bloques por donde no puede pasar el personaje
   }
 
@@ -58,8 +58,13 @@ object juego{
     game.addVisual(vida1)
   }
 
-  method perseguirACoco(monstruoNivel){
+  method perseguirACoco(monstruosNivel){
     //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
+    monstruosNivel.enemigos().forEach({m =>
+     const id = m.identity().toString()
+     game.addVisual(m) 
+     m.perseguirACoco(800, id)
+     })
   }
 
   method configurarTeclado(){
@@ -70,7 +75,9 @@ object juego{
   method atacarAMonstruo() {
    keyboard.e().onPressDo({
     coco.atacar()
-    game.whenCollideDo(coco, {m => m.recibirAtaque()})
+    game.whenCollideDo(coco, {m =>
+     const id  = m.identity().toString()
+     m.recibirAtaque(id)})
     })
   }
 

@@ -10,14 +10,14 @@ class Monstruo{
 
     method image() = if(vida >= 1)"slayerCamina" + dir + pos + ".png" else "corazonMuerto.png"
 
-    method perseguirACoco(velocidad){
-        game.onTick(velocidad, "perseguirPersonaje", {self.perseguirPersonaje()})
-        self.morir()
+    method perseguirACoco(velocidad, id){
+        game.onTick(velocidad, "perseguirCoco" + id, {self.perseguirPersonaje()})
     }
 
-    method morir() {
+    method morir(id) {
       if(self.estaMuerto()){
-        game.removeTickEvent("perseguirPersonaje")
+        game.removeVisual(self)
+        game.removeTickEvent("perseguirCoco" + id)
       }
     }
 
@@ -56,7 +56,12 @@ class Monstruo{
         return mover
     }    
     method estaMuerto() = vida == 0
-    method recibirAtaque() {vida = 0.max(vida - 0.05)}
+
+    method recibirAtaque(id){
+        vida = 0.max(vida - 0.05)
+        if (self.estaMuerto())
+            self.morir(id)
+    }
 }
 
 object imagenInicial{ 
