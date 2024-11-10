@@ -80,3 +80,8 @@ object fondoNivel2{
     var property position = game.center()
     var property image = "fondo2.png" //proximamente
 }
+
+object imagenDeVictoria{
+    var property position = game.center()
+    var property image = "fondoVictoria.png"
+}

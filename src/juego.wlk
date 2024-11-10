@@ -18,7 +18,7 @@ object juego{
       if(!self.nivelIniciado())
         game.removeVisual(imagenInicial)//Hacer lo de la imagen inicial
         nivelActual = 1
-        self.prepararJuego()
+        self.prepararJuego(nivel1)
         self.nivelIniciado(true)
     }
   }
@@ -32,12 +32,12 @@ object juego{
     game.addVisual(imagenInicial)
   }
 
-  method prepararJuego(){
+  method prepararJuego(nivel){
     game.title("CocoAdventure")
     game.width(16)
     game.height(16)
 	  game.cellSize(32)
-    self.crearNivel(nivel1)
+    self.crearNivel(nivel)
   }
 
   method crearNivel(nivel){
@@ -70,6 +70,7 @@ object juego{
   method configurarTeclado(){
     self.atacarAMonstruo()
     self.consultarVida()
+    game.onTick(2000, "comprobar", {if(nivel1.enemigos().size()  ==  0) self.siguienteNivel()}) //Cuando funcione cambiar nivel1 para que funcione para todos
   }
 
   method atacarAMonstruo() {
@@ -90,6 +91,23 @@ object juego{
   method agregarBloques(nivel){
     // Crear los bloques por donde no puede pasar el personaje de cada nivel
   }
+
+  method siguienteNivel(){
+    nivelActual += 1
+    self.finalizarNivel()
+    if ((nivelActual < 2) and (self.cocoEnPosicionDeSalida())){
+      self.prepararJuego(nivel2)
+    }else
+      game.addVisual(imagenDeVictoria)
+  }
+
+  method finalizarNivel(){
+      game.clear()
+      coco.posicionInicial(2)
+  }
+
+  method cocoEnPosicionDeSalida() = (coco.position().x()  == 13) and (coco.position().y() == 7)
+  
     //Aca va a estar toda la logica de el juego
     //Pantalla de inicio, pantalla de game over
     //Limpiar los visuales al cambiar de nivel, poder cambiar de nivel al ir a la puerta

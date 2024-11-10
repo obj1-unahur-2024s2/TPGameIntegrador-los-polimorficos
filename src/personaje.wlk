@@ -23,6 +23,13 @@ object coco {
     return mov
   }
 
+  method posicionInicial(numeroNivel){
+    if (numeroNivel == 1)
+      position = game.at(3, 3)
+    else
+      position = game.at(3, 7)
+  }
+
   method perderVida() {
     vidas -= 0.01
     Vidas.perderVida()

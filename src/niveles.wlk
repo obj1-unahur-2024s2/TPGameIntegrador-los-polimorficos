@@ -10,7 +10,7 @@ class Nivel{
   var property position = game.center()
   var property image
   const property nivel
-  var property enemigos
+  var property enemigos //Creo que queda mejor monstruo, pero hay que cambiar en nombre todas las veces que aparece
   const property sonidoNivel
   var property bloquesMapa
 }
