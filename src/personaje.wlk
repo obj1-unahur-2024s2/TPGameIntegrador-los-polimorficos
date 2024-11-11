@@ -1,7 +1,7 @@
 import extras.*
 
 object coco {
-  var vidas = 2
+  var vidas = 3
   method vidas() = vidas 
   var property position = game.at(1,9)
   //[15, 9] y [15, 8] puerta de salida
@@ -25,15 +25,16 @@ object coco {
 
   method posicionInicial(numeroNivel){
     if (numeroNivel == 1)
-      position = game.at(3, 3)
+      position = game.at(2, 2)
     else
       position = game.at(3, 7)
   }
 
   method perderVida() {
-    vidas -= 0.01
+    vidas = 0.max(vidas - 1)
     Vidas.perderVida()
   }
+
   method estaVivo() = vidas > 0
 
   method recuperarVida() {

@@ -19,14 +19,19 @@ class Nivel{
 
 }
 
-const bloquesMapa1 = new Bloques(bloquesMapa=[[1, 1], [], [], []],
+const bloquesMapa1 = new Bloques(bloquesNorte=[[2, 5], [3, 11], [4, 11], [5, 8], [6, 8], [7, 11], [8, 11], [9, 11], [10, 11], [11, 11], [12, 11], [10, 9], 
+[13, 8], [11, 5], [10, 5], [9, 5], [8, 4]] ,
+bloquesEste=[[4, 11], [4, 10], [4, 9], [8, 8], [8, 7], [8, 6], [7, 5], [9, 10], [12, 11], [12, 10], [12, 9], [13, 8], [12, 7], [12, 6], [12, 5], [12, 4], [12, 3]], 
 nivel = 1
 )
-const bloquesMapa2 = new Bloques(bloquesMapa = [[], [], []],
+const bloquesMapa2 = new Bloques(bloquesNorte = [[], [], []],
 nivel = 2
 )
 
 class Bloques{
-  const property bloquesMapa = []
+  const property bloquesNorte = []
+  const property bloquesEste = []
+  const property bloquesSur = []
+  const property bloquesOeste = []
   const property nivel
 }

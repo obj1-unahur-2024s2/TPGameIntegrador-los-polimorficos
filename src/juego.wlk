@@ -10,11 +10,8 @@ const pocionesNivel2 = []
 object juego{
   var nivelActual = 0 
   var nivelIniciado = false
+  var objetoNivel = nivel1
   
-  
-
-
-
   method nivelIniciado() = nivelIniciado
   method nivelActual() = nivelActual
   method nivelIniciado(estaIniciado){nivelIniciado = estaIniciado}
@@ -25,7 +22,7 @@ object juego{
       if(!self.nivelIniciado())
         game.removeVisual(imagenInicial)//Hacer lo de la imagen inicial
         nivelActual = 1
-        self.prepararJuego(nivel1)
+        self.prepararJuego()
         self.nivelIniciado(true)
     }
   }
@@ -39,13 +36,13 @@ object juego{
     game.addVisual(imagenInicial)
   }
 
-  method prepararJuego(nivel){
+  method prepararJuego(){
 
     game.title("CocoAdventure")
     game.width(16)
     game.height(16)
 	  game.cellSize(32)
-    self.crearNivel(nivel)
+    self.crearNivel(objetoNivel)
   }
 
   method crearNivel(nivel){
@@ -56,8 +53,9 @@ object juego{
 
     game.addVisual(nivel.image()) // Crear en un archivo aparte que contenga la clase nivel
     game.addVisualCharacter(coco)
+    coco.posicionInicial(nivelActual)
     self.crearVidas()
-    self.configurarTeclado()
+    self.configurarTeclado(nivel)
     self.perseguirACoco(nivel) //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
     self.agregarBloques(nivel) // Crear los bloques por donde no puede pasar el personaje
     self.agregarPociones(nivel)  
@@ -81,18 +79,18 @@ object juego{
      })
   }
 
-  method configurarTeclado(){
-    self.atacarAMonstruo()
+  method configurarTeclado(nivel){
+    self.atacarAMonstruo(nivel)
     self.consultarVida()
-    game.onTick(2000, "comprobar", {if(nivel1.enemigos().size()  ==  0) self.siguienteNivel()}) //Cuando funcione cambiar nivel1 para que funcione para todos
+    game.onTick(2000, "comprobar", {if(objetoNivel.enemigos().size()  ==  0) self.siguienteNivel()}) //Cuando funcione cambiar nivel1 para que funcione para todos
   }
 
-  method atacarAMonstruo() {
+  method atacarAMonstruo(nivel) {
    keyboard.e().onPressDo({
     coco.atacar()
-    game.whenCollideDo(coco, {m =>
-     const id  = m.identity().toString()
-     m.recibirAtaque(id)})
+    nivel.enemigos().forEach({m => 
+      const id  = m.identity().toString()
+      if(m.position() == coco.position()) m.recibirAtaque(id)})
     })
   }
 
@@ -109,35 +107,31 @@ object juego{
   method siguienteNivel(){
     nivelActual += 1
     self.finalizarNivel()
-    if ((nivelActual < 2) and (self.cocoEnPosicionDeSalida())){
-      self.prepararJuego(nivel2)
+    if ((nivelActual == 2)){
+      objetoNivel = nivel2
+      self.prepararJuego()
     }else
+      objetoNivel = nivel1
       game.addVisual(imagenDeVictoria)
   }
 
   method finalizarNivel(){
       game.clear()
+      objetoNivel.sonidoNivel().pause()
       coco.posicionInicial(2)
   }
 
-  method cocoEnPosicionDeSalida() = (coco.position().x()  == 13) and (coco.position().y() == 7)
+  //method cocoEnPosicionDeSalida() = (coco.position().x()  == 13) and (coco.position().y() == 7)
   
     //Aca va a estar toda la logica de el juego
     //Pantalla de inicio, pantalla de game over
     //Limpiar los visuales al cambiar de nivel, poder cambiar de nivel al ir a la puerta
 
 
-    method agregarPociones(pocionesDelNivel) {
+    method agregarPociones(pocionesDelNivel){
       //Aparecen las pociones del respectivo nivel
-      pocionesDelNivel.pociones().forEach({m =>
-      game.addVisual(m) 
-    
+      pocionesDelNivel.pociones().forEach({p =>
+      game.addVisual(p) 
     })
-      
     }
-
-    
-
-
-
 }

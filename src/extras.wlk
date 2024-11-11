@@ -1,10 +1,10 @@
 import personaje.*
 import game.*
 class Monstruo{
-    var vida = 3
+    var vida = 2
     var property position = game.at(x, y)
-    const x = (0.. game.width()-1).anyOne()
-    const y = (0.. game.height()-1).anyOne()
+    const x = (2.. game.width()-1).anyOne()
+    const y = (2.. game.height()-1).anyOne()
     var dir = "Izq"
     var pos = 1
 
@@ -58,10 +58,15 @@ class Monstruo{
     method estaMuerto() = vida == 0
 
     method recibirAtaque(id){
-        vida = 0.max(vida - 0.05)
+        vida = 0.max(vida - 0.5)
         if (self.estaMuerto())
             self.morir(id)
     }
+}
+
+class Calabera inherits Monstruo{
+    override method image() = ""
+
 }
 
 object imagenInicial{ 
@@ -83,7 +88,12 @@ object fondoNivel2{
 
 object imagenDeVictoria{
     var property position = game.center()
-    var property image = "fondoVictoria.png"
+    var property image = "fondoVictoria.png" //proximamente
+}
+
+object imagenGameOver{
+    var property position = game.center()
+    var property image = "fondoGameOver.png" //proximamente
 }
 
 
@@ -92,7 +102,7 @@ class Pociones {
     var property position = game.at(x, y)
     var x
     var y 
-    const imagen = "pocion.png"
+    const imagen = "pocionCorazon.png"
     var property vida = 1
 
     method image() = imagen
