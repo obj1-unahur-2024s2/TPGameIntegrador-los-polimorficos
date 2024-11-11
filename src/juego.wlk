@@ -4,9 +4,16 @@ import niveles.*
 
 const monstruosNivel1 =  [new Monstruo(),  new Monstruo()]
 const monstruosNivel2 =  (0..2).map({num => new Monstruo()})
+const pocionesNivel1 = [new Pociones(x=10,y=11), new Pociones(x=4,y=5),new Pociones(x=12,y=4)]
+const pocionesNivel2 = []
+
 object juego{
   var nivelActual = 0 
   var nivelIniciado = false
+  
+  
+
+
 
   method nivelIniciado() = nivelIniciado
   method nivelActual() = nivelActual
@@ -33,6 +40,7 @@ object juego{
   }
 
   method prepararJuego(nivel){
+
     game.title("CocoAdventure")
     game.width(16)
     game.height(16)
@@ -41,12 +49,18 @@ object juego{
   }
 
   method crearNivel(nivel){
+
+    nivel.sonidoNivel().shouldLoop(true)  // Hacerlo en loop
+    nivel.sonidoNivel().volume(0.5)          // Volumen 
+    game.schedule(500, { nivel.sonidoNivel().play() }) // inicia musica
+
     game.addVisual(nivel.image()) // Crear en un archivo aparte que contenga la clase nivel
     game.addVisualCharacter(coco)
     self.crearVidas()
     self.configurarTeclado()
     self.perseguirACoco(nivel) //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
     self.agregarBloques(nivel) // Crear los bloques por donde no puede pasar el personaje
+    self.agregarPociones(nivel)  
   }
 
   method crearVidas(){
@@ -111,4 +125,19 @@ object juego{
     //Aca va a estar toda la logica de el juego
     //Pantalla de inicio, pantalla de game over
     //Limpiar los visuales al cambiar de nivel, poder cambiar de nivel al ir a la puerta
+
+
+    method agregarPociones(pocionesDelNivel) {
+      //Aparecen las pociones del respectivo nivel
+      pocionesDelNivel.pociones().forEach({m =>
+      game.addVisual(m) 
+    
+    })
+      
+    }
+
+    
+
+
+
 }

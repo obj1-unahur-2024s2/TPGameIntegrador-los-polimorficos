@@ -85,3 +85,33 @@ object imagenDeVictoria{
     var property position = game.center()
     var property image = "fondoVictoria.png"
 }
+
+
+class Pociones {
+  
+    var property position = game.at(x, y)
+    var x
+    var y 
+    const imagen = "pocion.png"
+    var property vida = 1
+
+    method image() = imagen
+
+    method curar() {
+        if(coco.vidas() < 3 and vida > 0){
+            coco.recuperarVida()
+            vida -= 1
+            self.desaparecer()
+        }
+    
+    }
+
+    method desaparecer() {
+        if (self.estaUsada()){
+            game.removeVisual(self)
+        }
+    
+    }
+
+    method estaUsada() = vida ==0
+}

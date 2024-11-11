@@ -1,7 +1,7 @@
 import extras.*
 
 object coco {
-  var vidas = 3
+  var vidas = 2
   method vidas() = vidas 
   var property position = game.at(1,9)
   //[15, 9] y [15, 8] puerta de salida
@@ -35,6 +35,12 @@ object coco {
     Vidas.perderVida()
   }
   method estaVivo() = vidas > 0
+
+  method recuperarVida() {
+    const vidaFaltante = 3-vidas
+    vidas += vidaFaltante
+    
+  }
 }
 class Vidas{
   var property position = game.at(x, y)
