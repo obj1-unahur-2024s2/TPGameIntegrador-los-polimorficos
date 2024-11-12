@@ -3,15 +3,15 @@ import game.*
 class Monstruo{
     var vida = 2
     var property position = game.at(x, y)
-    const x = (2.. game.width()-1).anyOne()
-    const y = (2.. game.height()-1).anyOne()
+    const x = (3.. game.width()-6).anyOne()
+    const y = (3.. game.height()-6).anyOne()
     var dir = "Izq"
     var pos = 1
 
     method image() = if(vida >= 1)"slayerCamina" + dir + pos + ".png" else "corazonMuerto.png"
 
-    method perseguirACoco(velocidad, id){
-        game.onTick(velocidad, "perseguirCoco" + id, {self.perseguirPersonaje()})
+    method perseguirACoco(velocidad, id, mapaNivel){
+        game.onTick(velocidad, "perseguirCoco" + id, {self.perseguirPersonaje(mapaNivel)})
     }
 
     method morir(id) {
@@ -21,12 +21,12 @@ class Monstruo{
       }
     }
 
-    method perseguirPersonaje(){
+    method perseguirPersonaje(mapaNivel){
         if (self.position() != coco.position())
-            position = self.perseguirEnDireccionY()
-            position = self.perseguirEnDireccionX()
+            position = self.perseguirEnDireccionY(mapaNivel)
+            position = self.perseguirEnDireccionX(mapaNivel)
             game.onTick(1000, "animacionDelCanibal", {self.animacionCaminar()})
-            if (self.perseguirEnDireccionX() == position.right(1))
+            if (self.perseguirEnDireccionX(mapaNivel) == position.right(1))
                 dir = "Der"
             else
                 dir = "Izq"
@@ -38,7 +38,7 @@ class Monstruo{
         return pos
     }
 
-    method perseguirEnDireccionX(){
+    method perseguirEnDireccionX(mapaNivel){
         var mover = position
         if(coco.position().x() > self.position().x())
             mover = mover.right(1)
@@ -47,11 +47,11 @@ class Monstruo{
         return mover
     } 
 
-    method perseguirEnDireccionY(){
+    method perseguirEnDireccionY(mapaNivel){
         var mover = position
-        if(coco.position().y() > self.position().y())
+        if(coco.position().y() > self.position().y()) 
             mover = mover.up(1)
-        else if(coco.position().y() < self.position().y()) 
+        else if(coco.position().y() < self.position().y())
             mover = mover.down(1)
         return mover
     }    
@@ -65,8 +65,49 @@ class Monstruo{
 }
 
 class Calabera inherits Monstruo{
-    override method image() = ""
+    var direccion = 0
+    var miraA = "Der"
+    override method image() = "calabera" + miraA + ".png"
 
+    override method perseguirACoco(velocidad, id, mapaNivel){
+        game.onTick(velocidad, "perseguirCoco" + id, {self.perseguirPersonaje(mapaNivel)})
+    }
+
+    override method perseguirPersonaje(mapaNivel){
+        game.onTick(250, "cambiarDir", {self.cambiarDireccion(mapaNivel)})
+        self.cambiarDireccion(mapaNivel)
+        if(direccion == 0)
+            position = position.up(1)
+        else if(direccion == 1)
+            position = position.right(1)
+        else if(direccion == 2)
+            position = position.down(1)
+        else
+            position = position.left(1)
+        
+    }
+
+    method puedeMoverHacia(mapaNivel){
+        const positionX = self.position().x()
+        const positionY = self.position().y()
+        return (mapaNivel.bloquesMapa().murosNivel().any({muro => muro.get(0) == positionX and muro.get(1) == positionY})) or (positionY == 12) or (positionY == 2) or (positionX == 3)
+    }
+    method cambiarDireccion(mapaNivel){
+        const positionX = self.position().x()
+        const positionY = self.position().y()
+        
+        if(direccion == 4)
+            direccion = 0
+        else if(positionY > 11)
+            direccion = 2
+        else if(positionY < 3)
+            direccion = 0
+        else if(positionX < 3)
+            direccion = 1
+        else if(positionX > 12)
+            direccion = 3
+        else{direccion += 1}
+    }
 }
 
 class Vidas{

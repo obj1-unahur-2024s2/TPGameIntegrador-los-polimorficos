@@ -2,7 +2,7 @@ import personaje.*
 import extras.*
 import niveles.*
 
-const monstruosNivel1 =  [new Monstruo(),  new Monstruo()]
+const monstruosNivel1 =  [new Monstruo(),  new Monstruo(), new Calabera()]
 const monstruosNivel2 =  (0..2).map({num => new Monstruo()})
 const pocionesNivel1 = [new Pociones(x=10,y=11), new Pociones(x=4,y=5),new Pociones(x=12,y=4)]
 const pocionesNivel2 = [] // cuando este listo el nivel 2 agrego las positions de las pociones 
@@ -66,7 +66,6 @@ object juego{
     self.crearVidas()
     self.configurarTeclado(nivel)
     self.perseguirACoco(nivel) //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
-    self.agregarBloques(nivel) // Crear los bloques por donde no puede pasar el personaje
     self.agregarPociones(nivel)  
     self.tomarPociones()
   }
@@ -85,7 +84,7 @@ object juego{
     monstruosNivel.enemigos().forEach({m =>
      const id = m.identity().toString()
      game.addVisual(m) 
-     m.perseguirACoco(800, id)
+     m.perseguirACoco(800, id, monstruosNivel)
      })
   }
 
@@ -114,10 +113,6 @@ object juego{
     keyboard.q().onPressDo({
       game.say(coco, "mi vida es " + coco.vidas())
     })
-  }
-
-  method agregarBloques(nivel){
-    // Crear los bloques por donde no puede pasar el personaje de cada nivel
   }
 
   method siguienteNivel(){
