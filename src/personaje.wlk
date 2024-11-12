@@ -1,5 +1,5 @@
 import extras.*
-
+import niveles.*
 object coco {
   var vidas = 3
   method vidas() = vidas 
@@ -12,6 +12,11 @@ object coco {
 
   method atacar() {game.onTick(250, "ataque", {self.animacionEspada()})}
   method irA(nuevaPosicion) {position = nuevaPosicion}
+
+  method bloqueHaciaArriba(bloquesNor){
+    if (bloquesNor.filter({b => b == position}) == position and position.up(1)) //TAMPOCO SE ME OCURRE COMO
+      position = position
+  }
 
   method animacionEspada() {
     imagen = "Espada"

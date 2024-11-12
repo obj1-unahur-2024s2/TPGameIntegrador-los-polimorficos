@@ -85,6 +85,11 @@ object juego{
     game.onTick(2000, "comprobar", {if(objetoNivel.enemigos().size()  ==  0) self.siguienteNivel()}) //Cuando funcione cambiar nivel1 para que funcione para todos
   }
 
+    //nivel.BloquesMapa().bloqueNorte().filter({m => m == p.position()})
+    //nivel.BloquesMapa().BloquesEste().filter({m => m == p.position()})
+    //nivel.BloquesMapa().BloquesSur().filter({m => m == p.position()})  NO SE ME OCURRE QUE HACER
+    //nivel.BloquesMapa().BloquesOeste().filter({m => m == p.position()})
+
   method atacarAMonstruo(nivel) {
    keyboard.e().onPressDo({
     coco.atacar()
