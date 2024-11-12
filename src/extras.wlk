@@ -112,6 +112,7 @@ class Pociones {
             coco.recuperarVida()
             vida -= 1
             self.desaparecer()
+            game.sound("tomarPocion.mp3").play()
         }
     
     }

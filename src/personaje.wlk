@@ -1,7 +1,7 @@
 import extras.*
 import niveles.*
 object coco {
-  var vidas = 3
+  var vidas = 1
   method vidas() = vidas 
   var property position = game.at(1,9)
   //[15, 9] y [15, 8] puerta de salida
@@ -15,7 +15,7 @@ object coco {
 
   method bloqueHaciaArriba(bloquesNor){
     if (bloquesNor.filter({b => b == position}) == position and position.up(1)) //TAMPOCO SE ME OCURRE COMO
-      position = position
+    position = position
   }
 
   method animacionEspada() {

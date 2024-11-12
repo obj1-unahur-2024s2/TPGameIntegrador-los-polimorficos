@@ -5,21 +5,30 @@ import niveles.*
 const monstruosNivel1 =  [new Monstruo(),  new Monstruo()]
 const monstruosNivel2 =  (0..2).map({num => new Monstruo()})
 const pocionesNivel1 = [new Pociones(x=10,y=11), new Pociones(x=4,y=5),new Pociones(x=12,y=4)]
-const pocionesNivel2 = []
+const pocionesNivel2 = [] // cuando este listo el nivel 2 agrego las positions de las pociones 
 
 object juego{
   var nivelActual = 0 
   var nivelIniciado = false
   var objetoNivel = nivel1
+  const musicaInicio = game.sound("musicaDeInicio.wav")
   
   method nivelIniciado() = nivelIniciado
   method nivelActual() = nivelActual
   method nivelIniciado(estaIniciado){nivelIniciado = estaIniciado}
 
   method iniciarJuego(){
+
+
+    musicaInicio.shouldLoop(true)  // Hacerlo en loop
+    musicaInicio.volume(0.1)          // Volumen 
+    game.schedule(500, { musicaInicio.play() }) // inicia musica
+
+
     self.prepararPantallaDeInicio()
     keyboard.space().onPressDo{
       if(!self.nivelIniciado())
+        musicaInicio.stop()
         game.removeVisual(imagenInicial)//Hacer lo de la imagen inicial
         nivelActual = 1
         self.prepararJuego()
@@ -59,6 +68,7 @@ object juego{
     self.perseguirACoco(nivel) //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
     self.agregarBloques(nivel) // Crear los bloques por donde no puede pasar el personaje
     self.agregarPociones(nivel)  
+    self.tomarPociones()
   }
 
   method crearVidas(){
@@ -138,5 +148,12 @@ object juego{
       pocionesDelNivel.pociones().forEach({p =>
       game.addVisual(p) 
     })
+    }
+
+    method tomarPociones() {
+      game.onCollideDo(coco, {p => p.curar()
+      
+      })
+      
     }
 }
