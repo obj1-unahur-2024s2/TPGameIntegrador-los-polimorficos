@@ -92,6 +92,7 @@ object juego{
   method configurarTeclado(nivel){
     self.atacarAMonstruo(nivel)
     self.consultarVida()
+    self.movimientoPersonaje()
     game.onTick(2000, "comprobar", {if(objetoNivel.enemigos().size()  ==  0) self.siguienteNivel()}) //Cuando funcione cambiar nivel1 para que funcione para todos
   }
 
@@ -131,6 +132,7 @@ object juego{
   }
 
   method finalizarNivel(){
+      objetoNivel.sonidoNivel().pause()
       game.clear()
       objetoNivel.sonidoNivel().pause()
       coco.posicionInicial(2)
@@ -155,5 +157,12 @@ object juego{
       
       })
       
+    }
+
+    method movimientoPersonaje(){
+      keyboard.right().onPressDo({coco.irHaciaDerecha(objetoNivel)})
+      keyboard.left().onPressDo({coco.irHaciaIzquierda(objetoNivel)})
+      keyboard.up().onPressDo({coco.irHaciaArriba(objetoNivel)})
+      keyboard.down().onPressDo({coco.irHaciaAbajo(objetoNivel)})
     }
 }

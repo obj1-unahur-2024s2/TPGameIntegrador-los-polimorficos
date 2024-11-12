@@ -13,11 +13,6 @@ object coco {
   method atacar() {game.onTick(250, "ataque", {self.animacionEspada()})}
   method irA(nuevaPosicion) {position = nuevaPosicion}
 
-  method bloqueHaciaArriba(bloquesNor){
-    if (bloquesNor.filter({b => b == position}) == position and position.up(1)) //TAMPOCO SE ME OCURRE COMO
-    position = position
-  }
-
   method animacionEspada() {
     imagen = "Espada"
     mov += 1
@@ -47,20 +42,32 @@ object coco {
     vidas += vidaFaltante
     
   }
-}
-class Vidas{
-  var property position = game.at(x, y)
-  var x
-  var y
-  var imagen = "corazon.png"
 
-  method image() = imagen
-
-  method perderVida(){
-    imagen = "corazonMuerto.png"
+  method irHaciaDerecha(mapaNivel){
+    const positionX = position.x()
+    const positionY = position.y()
+    if((mapaNivel.bloquesMapa().murosNivel().any({muro => muro.get(0) == positionX and muro.get(1) == positionY})) or (positionX == 14))
+      position = game.at(positionX -1, positionY)
   }
 
-  method recuperarVida(){
-    imagen = "corazon.png"
+  method irHaciaIzquierda(mapaNivel){
+    const positionX = position.x()
+    const positionY = position.y()
+    if((mapaNivel.bloquesMapa().murosNivel().any({muro => muro.get(0) == positionX and muro.get(1) == positionY})) or (positionX == 1))
+      position = game.at(positionX + 1, positionY)
+  }
+
+  method irHaciaArriba(mapaNivel){
+    const positionX = position.x()
+    const positionY = position.y()
+    if((mapaNivel.bloquesMapa().murosNivel().any({muro => muro.get(0) == positionX and muro.get(1) == positionY})) or (positionY == 12))
+      position = game.at(positionX, positionY -1)
+  }
+
+  method irHaciaAbajo(mapaNivel){
+    const positionX = position.x()
+    const positionY = position.y()
+    if((mapaNivel.bloquesMapa().murosNivel().any({muro => muro.get(0) == positionX and muro.get(1) == positionY})) or (positionY == 2))
+      position = game.at(positionX, positionY + 1)
   }
 }

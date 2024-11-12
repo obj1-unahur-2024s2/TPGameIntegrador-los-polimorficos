@@ -69,6 +69,23 @@ class Calabera inherits Monstruo{
 
 }
 
+class Vidas{
+  var property position = game.at(x, y)
+  var x
+  var y
+  var imagen = "corazon.png"
+
+  method image() = imagen
+
+  method perderVida(){
+    imagen = "corazonMuerto.png"
+  }
+
+  method recuperarVida(){
+    imagen = "corazon.png"
+  }
+}
+
 object imagenInicial{ 
     var property position = game.at(0, 0)
      var property image = "fondoInicio.png" 
