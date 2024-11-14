@@ -3,7 +3,7 @@ import niveles.*
 object coco {
   var vidas = 1
   method vidas() = vidas 
-  var property position = game.at(1,9)
+  var property position = game.at(3,9)
   //[15, 9] y [15, 8] puerta de salida
   var imagen = "Espada" // para poder cambiar a animacion de movimiento
   var mov = 0

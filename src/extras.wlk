@@ -64,7 +64,7 @@ class Monstruo{
     }
 }
 
-class Calabera inherits Monstruo{
+class Calabera inherits Monstruo(vida = 2.5){
     var direccion = 0
     var miraA = "Der"
     override method image() = "calabera" + miraA + ".png"
@@ -108,12 +108,18 @@ class Calabera inherits Monstruo{
             direccion = 3
         else{direccion += 1}
     }
+
+    override method recibirAtaque(id){
+        vida = 0.max(vida - 0.9)
+        if (self.estaMuerto())
+            self.morir(id)
+    }
 }
 
 class Vidas{
   var property position = game.at(x, y)
-  var x
-  var y
+  var property x
+  var property y
   var imagen = "corazon.png"
 
   method image() = imagen
