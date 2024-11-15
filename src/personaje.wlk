@@ -32,7 +32,7 @@ object coco {
 
   method perderVida() {
     vidas = 0.max(vidas - 1)
-    Vidas.perderVida()
+    //Vidas.perderVida()
   }
 
   method estaVivo() = vidas > 0

@@ -8,7 +8,7 @@ class Monstruo{
     var dir = "Izq"
     var pos = 1
 
-    method image() = if(vida >= 1)"slayerCamina" + dir + pos + ".png" else "corazonMuerto.png"
+    method image() = if(!self.estaMuerto())"slayerCamina" + dir + pos + ".png" else "corazonMuerto.png"
 
     method perseguirACoco(velocidad, id, mapaNivel){
         game.onTick(velocidad, "perseguirCoco" + id, {self.perseguirPersonaje(mapaNivel)})
@@ -147,7 +147,7 @@ object fondoNivel1{
 
 object fondoNivel2{
     var property position = game.center()
-    var property image = "fondo2.png" //proximamente
+    var property image = "mapaFinal.png" //proximamente
 }
 
 object imagenDeVictoria{
