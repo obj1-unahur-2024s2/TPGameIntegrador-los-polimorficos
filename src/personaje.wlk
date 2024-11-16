@@ -25,9 +25,9 @@ object coco {
 
   method posicionInicial(numeroNivel){
     if (numeroNivel == 1)
-      position = game.at(2, 2)
+      position = game.at(2, 5)
     else
-      position = game.at(3, 7)
+      position = game.at(2, 8)
   }
 
   method perderVida() {
@@ -70,4 +70,7 @@ object coco {
     if((mapaNivel.bloquesMapa().murosNivel().any({muro => muro.get(0) == positionX and muro.get(1) == positionY})) or (positionY == 2))
       position = game.at(positionX, positionY + 1)
   }
+
+  //method estaEnMuro() = (mapaNivel.bloquesMapa().murosNivel().any({muro => muro.get(0) == positionX and muro.get(1) == positionY}))
+  
 }

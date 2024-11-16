@@ -7,6 +7,20 @@ const monstruosNivel2 =  (0..2).map({num => new Monstruo()})
 const pocionesNivel1 = [new Pociones(x=10,y=11), new Pociones(x=4,y=5),new Pociones(x=12,y=4)]
 const pocionesNivel2 = [] // cuando este listo el nivel 2 agrego las positions de las pociones 
 
+//Mejorar las colisiones con coco, para que sea mas objetoso
+//Mejorar los bloques, que estos sean objetos
+//Tal vez cambiar lo del id, que cada monstruo sepa su id (yo lo dejaria como esta)
+//Hacer un metodo "misionCumplida()" o algo por el estilo, con la logica de terminado de nivel
+
+//queda:
+//Que coco pierda vidas
+//Despues que esas vidas que perdio se vean reflejadas en los corazones
+//Que pierda si se queda sin vidas, y que la pantalla de game over lo mande a la pantalla de inicio
+//Que compruebe si coco paso el nivel
+//El jefe que estoy haciendo y la logica de habilidad especial
+//(Si hay tiempo le podriamos poner una barra de vida al jefe)
+//Al terminar el nivel dos poder ganar
+
 object juego{
   var nivelActual = 0 
   var nivelIniciado = false
@@ -46,11 +60,6 @@ object juego{
   }
 
   method prepararJuego(){
-
-    game.title("CocoAdventure")
-    game.width(16)
-    game.height(16)
-	  game.cellSize(32)
     self.crearNivel(objetoNivel)
   }
 

@@ -23,13 +23,14 @@ class Monstruo{
 
     method perseguirPersonaje(mapaNivel){
         if (self.position() != coco.position())
-            position = self.perseguirEnDireccionY(mapaNivel)
+            position = self.perseguirEnDireccionY(mapaNivel) //intetentar que no pase por arriba de los bloques
             position = self.perseguirEnDireccionX(mapaNivel)
             game.onTick(1000, "animacionDelCanibal", {self.animacionCaminar()})
             if (self.perseguirEnDireccionX(mapaNivel) == position.right(1))
                 dir = "Der"
             else
                 dir = "Izq"
+        game.removeTickEvent("animacionCanibal")
     }
 
     method animacionCaminar(){
@@ -76,15 +77,17 @@ class Calabera inherits Monstruo(vida = 2.5){
     override method perseguirPersonaje(mapaNivel){
         game.onTick(250, "cambiarDir", {self.cambiarDireccion(mapaNivel)})
         self.cambiarDireccion(mapaNivel)
-        if(direccion == 0)
+        if(direccion == 0){
             position = position.up(1)
-        else if(direccion == 1)
+        }else if(direccion == 1){
+            miraA = "Der"
             position = position.right(1)
-        else if(direccion == 2)
+        }else if(direccion == 2){
             position = position.down(1)
-        else
+        }else{
+            miraA = "Izq"
             position = position.left(1)
-        
+        }
     }
 
     method puedeMoverHacia(mapaNivel){
@@ -92,6 +95,7 @@ class Calabera inherits Monstruo(vida = 2.5){
         const positionY = self.position().y()
         return (mapaNivel.bloquesMapa().murosNivel().any({muro => muro.get(0) == positionX and muro.get(1) == positionY})) or (positionY == 12) or (positionY == 2) or (positionX == 3)
     }
+
     method cambiarDireccion(mapaNivel){
         const positionX = self.position().x()
         const positionY = self.position().y()
@@ -100,11 +104,11 @@ class Calabera inherits Monstruo(vida = 2.5){
             direccion = 0
         else if(positionY > 11)
             direccion = 2
-        else if(positionY < 3)
+        else if(positionY < 4)
             direccion = 0
-        else if(positionX < 3)
+        else if(positionX < 4)
             direccion = 1
-        else if(positionX > 12)
+        else if(positionX > 11)
             direccion = 3
         else{direccion += 1}
     }
@@ -113,6 +117,32 @@ class Calabera inherits Monstruo(vida = 2.5){
         vida = 0.max(vida - 0.9)
         if (self.estaMuerto())
             self.morir(id)
+    }
+}
+
+class JefeDuende inherits Monstruo{
+    var accion = ""
+    var animacion = 1
+    override method image() = "reyDuende"+ accion + animacion +".png" 
+    override method perseguirACoco(velocidad, id, mapaNivel){
+        game.onTick(velocidad, "jefePerseguirCoco", {self.perseguirPersonaje(mapaNivel)})
+        self.ataqueEspecial()
+    }
+
+    method ataqueEspecial(){
+        game.onTick(10000, "saltoSupremo", action)
+    }
+
+    method superSalto(){
+        accion = "Salto"
+        animacion += 1
+        if(animacion == 7)
+            game.removeTickEvent("saltoSupremo")
+            self.animacionFinal()
+    }
+
+    method animacionFinal(){
+        
     }
 }
 
@@ -136,8 +166,6 @@ class Vidas{
 object imagenInicial{ 
     var property position = game.at(0, 0)
      var property image = "fondoInicio.png" 
-     //Ahi termine de hacer la imagen base para el inicio.
-     //Despues hago que aparezca al principio como pantalla de inicio, que ahora estoy cansado.
 }
 
 object fondoNivel1{
@@ -147,7 +175,7 @@ object fondoNivel1{
 
 object fondoNivel2{
     var property position = game.center()
-    var property image = "mapaFinal.png" //proximamente
+    var property image = "mapaFinal.png"
 }
 
 object imagenDeVictoria{
