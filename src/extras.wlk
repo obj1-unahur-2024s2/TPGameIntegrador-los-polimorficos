@@ -1,10 +1,11 @@
 import personaje.*
 import game.*
+import juego.*
 class Monstruo{
-    var vida = 2
     var property position = game.at(x, y)
     const x = (3.. game.width()-6).anyOne()
     const y = (3.. game.height()-6).anyOne()
+    var vida = 3
     //implementamos una variable para la velocidad de monstruo
     var velocidad = 900
     var dir = "Izq"
@@ -65,14 +66,22 @@ class Monstruo{
         if (self.estaMuerto())
             self.morir(id)
     }
+
+    method colisionarConCoco(){
+        self.atacarACoco()
+    }
+
+    method atacarACoco(){
+        coco.perderVida()
+    }
 }
 
-class Calabera inherits Monstruo(vida = 2.5, velocidad = 1100){
+class Calabera inherits Monstruo(vida = 2.5){
     var direccion = 0
     var miraA = "Der"
     override method image() = "calabera" + miraA + ".png"
 
-    override method perseguirACoco(id, mapaNivel){
+        override method perseguirACoco(id, mapaNivel){
         game.onTick(velocidad, "perseguirCoco" + id, {self.perseguirPersonaje(mapaNivel)})
     }
 
@@ -128,22 +137,30 @@ class JefeDuende inherits Monstruo{
     override method image() = "reyDuende"+ accion + animacion +".png" 
     override method perseguirACoco(id, mapaNivel){
         game.onTick(velocidad, "jefePerseguirCoco", {self.perseguirPersonaje(mapaNivel)})
-        self.ataqueEspecial()
+        self.ataqueEspecial(id, mapaNivel)
     }
 
-    method ataqueEspecial(){
-        game.onTick(10000, "saltoSupremo", {})
+    method ataqueEspecial(id, mapaNivel){
+        game.onTick(10500, "saltoSupremo", {
+            game.removeTickEvent("jefePerseguirCoco")
+            self.superSalto(id, mapaNivel)
+            })
     }
 
-    method superSalto(){
+    method superSalto(id, mapaNivel){
         accion = "Salto"
         animacion += 1
         if(animacion == 7)
             game.removeTickEvent("saltoSupremo")
             self.animacionFinal()
+            self.perseguirACoco(id, mapaNivel)
     }
 
     method animacionFinal(){
+        animacion = 3
+        game.flushEvents(500) //Si esto me funciona seria como un time.sleep()
+        monstruosNivel2.addAll(new Calabera(), new Calabera())
+        animacion = 1
         
     }
 }
@@ -164,7 +181,39 @@ class Vidas{
     imagen = "corazon.png"
   }
 }
+class Pociones {
+  
+    var property position = game.at(x, y)
+    var x
+    var y 
+    const imagen = "pocionCorazon.png"
+    var property vida = 1
 
+    method image() = imagen
+
+    method colisionarConCoco(){
+        self.curar()
+    }
+
+    method curar() {
+        if(coco.vidas() < 3 and vida > 0){
+            coco.recuperarVida()
+            vida -= 1
+            self.desaparecer()
+            game.sound("tomarPocion.mp3").play()
+        }
+    
+    }
+
+    method desaparecer() {
+        if (self.estaUsada()){
+            game.removeVisual(self)
+        }
+    
+    }
+
+    method estaUsada() = vida ==0
+}
 object imagenInicial{ 
     var property position = game.at(0, 0)
      var property image = "fondoInicio.png" 
@@ -190,33 +239,3 @@ object imagenGameOver{
     var property image = "fondoGameOver.png" //proximamente
 }
 
-
-class Pociones {
-  
-    var property position = game.at(x, y)
-    var x
-    var y 
-    const imagen = "pocionCorazon.png"
-    var property vida = 1
-
-    method image() = imagen
-
-    method curar() {
-        if(coco.vidas() < 3 and vida > 0){
-            coco.recuperarVida()
-            vida -= 1
-            self.desaparecer()
-            game.sound("tomarPocion.mp3").play()
-        }
-    
-    }
-
-    method desaparecer() {
-        if (self.estaUsada()){
-            game.removeVisual(self)
-        }
-    
-    }
-
-    method estaUsada() = vida ==0
-}

@@ -74,6 +74,7 @@ object juego{
     self.configurarTeclado(nivel)
     self.perseguirACoco(nivel) //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
     self.agregarPociones(nivel)  
+    self.colisionarConCoco()
     // self.tomarPociones()
   }
 
@@ -86,19 +87,21 @@ object juego{
     game.addVisual(vida1)
 
     if(coco.vidas() == 2){
-      vida1.perderVida()
+      vida3.perderVida()
     }else if(coco.vidas() == 1){
-      vida1.perderVida()
+      vida3.perderVida()
       vida2.perderVida()
     } else if(coco.vidas() == 0){
-      vida1.perderVida()
-      vida2.perderVida()
       vida3.perderVida()
+      vida2.perderVida()
+      vida1.perderVida()
     }
 
   }
 
-
+  method colisionarConCoco(){
+    game.onCollideDo(coco, {p => p.colisionarConCoco()})
+  }
 
   method perseguirACoco(monstruosNivel){
     //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
@@ -121,7 +124,7 @@ object juego{
       coco.atacar()
       nivel.enemigos().forEach({m => 
         const id  = m.identity().toString()
-        game.onCollideDo(coco, m.recibirAtaque(id))
+        if(m.position() == coco.position()) m.recibirAtaque(id)
       })
     })
   }
