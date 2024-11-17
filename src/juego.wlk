@@ -86,17 +86,34 @@ object juego{
     game.addVisual(vida2)
     game.addVisual(vida1)
 
-    if(coco.vidas() == 2){
-      vida3.perderVida()
-    }else if(coco.vidas() == 1){
-      vida3.perderVida()
-      vida2.perderVida()
-    } else if(coco.vidas() == 0){
-      vida3.perderVida()
-      vida2.perderVida()
-      vida1.perderVida()
-    }
+    game.onTick(10, "perderVidas", {self.calcularVidaPerdida(vida1,vida2,vida3)})
+    game.onTick(10, "perderVidas", {self.calcularVidaRecuperada(vida1,vida2,vida3)})
+  }
 
+  method calcularVidaPerdida(c1,c2,c3) {
+    if(coco.vidas() >= 2){
+      c3.perderVida()
+    }else if(coco.vidas() >= 1){
+      c3.perderVida()
+      c2.perderVida()
+    } else if(coco.vidas() == 0){
+      c3.perderVida()
+      c2.perderVida()
+      c1.perderVida()
+    }
+  }
+
+  method calcularVidaRecuperada(c1,c2,c3) {
+    if(coco.vidas() == 3){
+      c3.recuperarVida()
+      c2.recuperarVida()
+      c1.recuperarVida()
+    }else if(coco.vidas() == 2){
+      c3.recuperarVida()
+      c2.recuperarVida()
+    } else if(coco.vidas() == 1){
+      c1.recuperarVida()
+    }
   }
 
   method colisionarConCoco(){
