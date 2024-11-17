@@ -32,8 +32,6 @@ object juego{
   method nivelIniciado(estaIniciado){nivelIniciado = estaIniciado}
 
   method iniciarJuego(){
-
-
     musicaInicio.shouldLoop(true)  // Hacerlo en loop
     musicaInicio.volume(0.1)          // Volumen 
     game.schedule(500, { musicaInicio.play() }) // inicia musica
@@ -66,7 +64,7 @@ object juego{
   method crearNivel(nivel){
 
     nivel.sonidoNivel().shouldLoop(true)  // Hacerlo en loop
-    nivel.sonidoNivel().volume(0.5)          // Volumen 
+    nivel.sonidoNivel().volume(0.2)          // Volumen 
     game.schedule(500, { nivel.sonidoNivel().play() }) // inicia musica
 
     game.addVisual(nivel.image()) // Crear en un archivo aparte que contenga la clase nivel
@@ -76,7 +74,7 @@ object juego{
     self.configurarTeclado(nivel)
     self.perseguirACoco(nivel) //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
     self.agregarPociones(nivel)  
-    self.tomarPociones()
+    // self.tomarPociones()
   }
 
   method crearVidas(){
@@ -86,14 +84,28 @@ object juego{
     game.addVisual(vida3)
     game.addVisual(vida2)
     game.addVisual(vida1)
+
+    if(coco.vidas() == 2){
+      vida1.perderVida()
+    }else if(coco.vidas() == 1){
+      vida1.perderVida()
+      vida2.perderVida()
+    } else if(coco.vidas() == 0){
+      vida1.perderVida()
+      vida2.perderVida()
+      vida3.perderVida()
+    }
+
   }
+
+
 
   method perseguirACoco(monstruosNivel){
     //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
     monstruosNivel.enemigos().forEach({m =>
      const id = m.identity().toString()
      game.addVisual(m) 
-     m.perseguirACoco(800, id, monstruosNivel)
+     m.perseguirACoco(id, monstruosNivel)
      })
   }
 
@@ -105,11 +117,12 @@ object juego{
   }   
 
   method atacarAMonstruo(nivel) {
-   keyboard.e().onPressDo({
-    coco.atacar()
-    nivel.enemigos().forEach({m => 
-      const id  = m.identity().toString()
-      if(m.position() == coco.position()) m.recibirAtaque(id)})
+    keyboard.e().onPressDo({
+      coco.atacar()
+      nivel.enemigos().forEach({m => 
+        const id  = m.identity().toString()
+        game.onCollideDo(coco, m.recibirAtaque(id))
+      })
     })
   }
 
@@ -146,12 +159,9 @@ object juego{
     })
     }
 
-    method tomarPociones() {
-      game.onCollideDo(coco, {p => p.curar()
-      
-      })
-      
-    }
+    // method tomarPociones() {
+    //   game.onCollideDo(coco, {p => p.curar()})
+    // }
 
     method movimientoPersonaje(){
       keyboard.right().onPressDo({coco.irHaciaDerecha(objetoNivel)})

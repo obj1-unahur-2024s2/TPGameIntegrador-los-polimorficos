@@ -1,7 +1,7 @@
 import extras.*
 import niveles.*
 object coco {
-  var vidas = 1
+  var vidas = 3
   method vidas() = vidas 
   var property position = game.at(3,9)
   //[15, 9] y [15, 8] puerta de salida
@@ -31,8 +31,7 @@ object coco {
   }
 
   method perderVida() {
-    vidas = 0.max(vidas - 1)
-    //Vidas.perderVida()
+    vidas = 0.max(vidas - 0.25)
   }
 
   method estaVivo() = vidas > 0
@@ -40,8 +39,9 @@ object coco {
   method recuperarVida() {
     const vidaFaltante = 3-vidas
     vidas += vidaFaltante
-    
   }
+
+  //ver
 
   method irHaciaDerecha(mapaNivel){
     const positionX = position.x()

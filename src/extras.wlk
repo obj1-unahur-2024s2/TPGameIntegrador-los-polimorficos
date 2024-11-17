@@ -5,12 +5,14 @@ class Monstruo{
     var property position = game.at(x, y)
     const x = (3.. game.width()-6).anyOne()
     const y = (3.. game.height()-6).anyOne()
+    //implementamos una variable para la velocidad de monstruo
+    var velocidad = 900
     var dir = "Izq"
     var pos = 1
 
     method image() = if(!self.estaMuerto())"slayerCamina" + dir + pos + ".png" else "corazonMuerto.png"
 
-    method perseguirACoco(velocidad, id, mapaNivel){
+    method perseguirACoco(id, mapaNivel){
         game.onTick(velocidad, "perseguirCoco" + id, {self.perseguirPersonaje(mapaNivel)})
     }
 
@@ -65,12 +67,12 @@ class Monstruo{
     }
 }
 
-class Calabera inherits Monstruo(vida = 2.5){
+class Calabera inherits Monstruo(vida = 2.5, velocidad = 1100){
     var direccion = 0
     var miraA = "Der"
     override method image() = "calabera" + miraA + ".png"
 
-    override method perseguirACoco(velocidad, id, mapaNivel){
+    override method perseguirACoco(id, mapaNivel){
         game.onTick(velocidad, "perseguirCoco" + id, {self.perseguirPersonaje(mapaNivel)})
     }
 
@@ -124,13 +126,13 @@ class JefeDuende inherits Monstruo{
     var accion = ""
     var animacion = 1
     override method image() = "reyDuende"+ accion + animacion +".png" 
-    override method perseguirACoco(velocidad, id, mapaNivel){
+    override method perseguirACoco(id, mapaNivel){
         game.onTick(velocidad, "jefePerseguirCoco", {self.perseguirPersonaje(mapaNivel)})
         self.ataqueEspecial()
     }
 
     method ataqueEspecial(){
-        game.onTick(10000, "saltoSupremo", action)
+        game.onTick(10000, "saltoSupremo", {})
     }
 
     method superSalto(){
