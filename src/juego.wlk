@@ -62,7 +62,7 @@ object juego{
   }
 
   method crearNivel(nivel){
-
+    nivelIniciado = true
     nivel.sonidoNivel().shouldLoop(true)  // Hacerlo en loop
     nivel.sonidoNivel().volume(0.2)          // Volumen 
     game.schedule(500, { nivel.sonidoNivel().play() }) // inicia musica
@@ -100,7 +100,22 @@ object juego{
   }
 
   method colisionarConCoco(){
-    game.onCollideDo(coco, {p => p.colisionarConCoco()})
+    game.onCollideDo(coco, {p =>
+     p.colisionarConCoco()
+     if(!coco.estaVivo()) self.gameOver()
+     })
+  }
+
+  method gameOver(){
+    //Logica de game over
+    self.finalizarNivel()
+    self.iniciarJuego()
+    // game.addVisual(imagenGameOver)
+    //PONER MUSICA
+    //keyboard.space().onPressDo(){
+    //  game.removeVisual(imagenGameOver)
+    //  self.iniciarJuego()
+    //}
   }
 
   method perseguirACoco(monstruosNivel){
@@ -147,9 +162,9 @@ object juego{
   }
 
   method finalizarNivel(){
+      nivelIniciado = false
       objetoNivel.sonidoNivel().pause()
       game.clear()
-      objetoNivel.sonidoNivel().pause()
       coco.posicionInicial(2)
   }
 
