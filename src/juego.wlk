@@ -2,22 +2,18 @@ import personaje.*
 import extras.*
 import niveles.*
 
-const monstruosNivel1 =  [new Monstruo(nivelActual=nivel1),  new Monstruo(nivelActual=nivel1), new Calabera(nivelActual=nivel1)]
-const monstruosNivel2 =  (0..2).map({num => new Monstruo(nivelActual=nivel2)})
+const monstruosNivel1 =  [new Monstruo(),  new Monstruo(), new Calabera()]
+const monstruosNivel2 =  [new ReyDuende()]
 const pocionesNivel1 = [new Pociones(x=10,y=11), new Pociones(x=4,y=5),new Pociones(x=12,y=4)]
 const pocionesNivel2 = [] // cuando este listo el nivel 2 agrego las positions de las pociones 
 
-//Mejorar las colisiones con coco, para que sea mas objetoso
 //Mejorar los bloques, que estos sean objetos
 //Tal vez cambiar lo del id, que cada monstruo sepa su id (yo lo dejaria como esta)
 //Hacer un metodo "misionCumplida()" o algo por el estilo, con la logica de terminado de nivel
 
 //queda:
-//Que coco pierda vidas (hecho)
-//Despues que esas vidas que perdio se vean reflejadas en los corazones (hecho)
-//Que pierda si se queda sin vidas, y que la pantalla de game over lo mande a la pantalla de inicio
-//Que compruebe si coco paso el nivel
-//El jefe que estoy haciendo y la logica de habilidad especial
+// Que la pantalla de game over lo mande a la pantalla de inicio
+//El jefe y la logica de habilidad especial
 //(Si hay tiempo le podriamos poner una barra de vida al jefe)
 //Al terminar el nivel dos poder ganar
 
@@ -58,11 +54,15 @@ object juego{
   }
 
   method prepararJuego(){
+    game.title("CocoAdventure")
+    game.width(16)
+    game.height(16)
+	  game.cellSize(32)
+    game.boardGround("fondoNegro1.jpg")
     self.crearNivel(objetoNivel)
   }
 
   method crearNivel(nivel){
-    nivelIniciado = true
     nivel.sonidoNivel().shouldLoop(true)  // Hacerlo en loop
     nivel.sonidoNivel().volume(0.2)          // Volumen 
     game.schedule(500, { nivel.sonidoNivel().play() }) // inicia musica
@@ -112,8 +112,8 @@ object juego{
 
   method colisionarConCoco(){
     game.onCollideDo(coco, {p =>
-    p.colisionarConCoco()
-    if(!coco.estaVivo()) self.gameOver()
+     p.colisionarConCoco()
+     if(!coco.estaVivo()) self.gameOver()
     })
   }
 
@@ -142,7 +142,7 @@ object juego{
     self.atacarAMonstruo(nivel)
     self.consultarVida()
     self.movimientoPersonaje()
-    game.onTick(200, "comprobar", {if(objetoNivel.enemigos().size()  ==  0) self.siguienteNivel()}) //Cuando funcione cambiar nivel1 para que funcione para todos
+    game.onTick(200, "comprobar", {if(objetoNivel.enemigos().size()  ==  0 and coco.position() == game.at(13, 8)) self.siguienteNivel()}) //Cuando funcione cambiar nivel1 para que funcione para todos
   }   
 
   method atacarAMonstruo(nivel) {
@@ -150,7 +150,7 @@ object juego{
       coco.atacar()
       nivel.enemigos().forEach({m => 
         const id  = m.identity().toString()
-        if(m.position() == coco.position()) m.recibirAtaque(id)
+        if(m.position() == coco.position()) m.recibirAtaque(id, nivel)
       })
     })
   }
@@ -166,7 +166,7 @@ object juego{
     self.finalizarNivel()
     if ((nivelActual == 2)){
       objetoNivel = nivel2
-      self.prepararJuego()
+       self.prepararJuego()
     }else
       objetoNivel = nivel1
       game.addVisual(imagenDeVictoria)
