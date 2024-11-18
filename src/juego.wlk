@@ -75,7 +75,6 @@ object juego{
     self.perseguirACoco(nivel) //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
     self.agregarPociones(nivel)  
     self.colisionarConCoco()
-    // self.tomarPociones()
   }
 
   method crearVidas(){
@@ -108,11 +107,6 @@ object juego{
       c3.recuperarVida()
       c2.recuperarVida()
       c1.recuperarVida()
-    }else if(coco.vidas() == 2){
-      c3.recuperarVida()
-      c2.recuperarVida()
-    } else if(coco.vidas() == 1){
-      c1.recuperarVida()
     }
   }
 
@@ -120,7 +114,7 @@ object juego{
     game.onCollideDo(coco, {p =>
      p.colisionarConCoco()
      if(!coco.estaVivo()) self.gameOver()
-     })
+    })
   }
 
   method gameOver(){
@@ -182,26 +176,26 @@ object juego{
       nivelIniciado = false
       objetoNivel.sonidoNivel().pause()
       game.clear()
-      coco.posicionInicial(2)
+      coco.posicionInicial(nivelActual)
   }
 
   //method cocoEnPosicionDeSalida() = (coco.position().x()  == 13) and (coco.position().y() == 7)
   
-    method agregarPociones(pocionesDelNivel){
-      //Aparecen las pociones del respectivo nivel
-      pocionesDelNivel.pociones().forEach({p =>
-      game.addVisual(p) 
-    })
-    }
+  method agregarPociones(pocionesDelNivel){
+    //Aparecen las pociones del respectivo nivel
+    pocionesDelNivel.pociones().forEach({p =>
+    game.addVisual(p) 
+  })
+  }
 
     // method tomarPociones() {
     //   game.onCollideDo(coco, {p => p.curar()})
     // }
 
-    method movimientoPersonaje(){
-      keyboard.right().onPressDo({coco.irHaciaDerecha(objetoNivel)})
-      keyboard.left().onPressDo({coco.irHaciaIzquierda(objetoNivel)})
-      keyboard.up().onPressDo({coco.irHaciaArriba(objetoNivel)})
-      keyboard.down().onPressDo({coco.irHaciaAbajo(objetoNivel)})
-    }
+  method movimientoPersonaje(){
+    keyboard.right().onPressDo({coco.irHaciaDerecha(objetoNivel)})
+    keyboard.left().onPressDo({coco.irHaciaIzquierda(objetoNivel)})
+    keyboard.up().onPressDo({coco.irHaciaArriba(objetoNivel)})
+    keyboard.down().onPressDo({coco.irHaciaAbajo(objetoNivel)})
+  }
 }
