@@ -70,12 +70,12 @@ class Monstruo{
     }
 
     method colisionarConCoco(){
-        self.atacarACoco()
-    }
-
-    method atacarACoco(){
         coco.perderVida()
     }
+
+    // method atacarACoco(){
+        
+    // }
 }
 
 class Calabera inherits Monstruo(vida = 2.5){
@@ -133,7 +133,7 @@ class Calabera inherits Monstruo(vida = 2.5){
     }
 }
 //Hacer que funcione el rey duende
-class ReyDuende inherits Monstruo{
+class ReyDuende inherits Monstruo(vida = 3, velocidad = 1300){
     var accion = ""
     var animacion = 1
     override method image() = "reyDuende"+ accion + animacion +".png" 
@@ -142,10 +142,25 @@ class ReyDuende inherits Monstruo{
         self.ataqueEspecial(id, mapaNivel)
     }
 
+    override method morir(id, nivel) {
+        if(self.estaMuerto()){
+            game.removeVisual(self)
+            game.removeTickEvent("perseguirCoco" + id)
+            game.removeTickEvent("saltoSupremo")
+            nivel.enemigos().remove(self)
+        }
+    }
+
+    override method recibirAtaque(id, nivel){
+        vida = 0.max(vida - 0.3)
+        if (self.estaMuerto())
+            self.morir(id, nivel)
+    }
+
     method ataqueEspecial(id, mapaNivel){
-        game.onTick(10500, "saltoSupremo", {
-            game.removeTickEvent("jefePerseguirCoco")
-            game.onTick(500, "ataqueEspecial", {self.superSalto(id, mapaNivel)})
+        game.onTick(3000, "saltoSupremo", { //tiempo de prueba
+            // game.removeTickEvent("jefePerseguirCoco")
+            // game.onTick(500, "ataqueEspecial", {self.superSalto(id, mapaNivel)})//cambiar
             monstruosNivel2.add(game.addVisual(new Calabera()))
             })
         }
@@ -157,7 +172,7 @@ class ReyDuende inherits Monstruo{
             game.removeTickEvent("ataqueEspecial")
             animacion = 1
             accion = ""
-            game.onTick(900, "jefePerseguirCoco", {self.perseguirPersonaje(mapaNivel)})
+            game.onTick(velocidad, "jefePerseguirCoco", {self.perseguirPersonaje(mapaNivel)})
     }
 
 }

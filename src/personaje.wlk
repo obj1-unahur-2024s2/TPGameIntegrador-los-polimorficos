@@ -48,6 +48,7 @@ object coco {
     const positionY = position.y()
     if((mapaNivel.bloquesMapa().murosNivel().any({muro => muro.get(0) == positionX and muro.get(1) == positionY})) or (positionX == 14))
       position = game.at(positionX -1, positionY)
+      //position = position.left(1) posible cambio
   }
 
   method irHaciaIzquierda(mapaNivel){
