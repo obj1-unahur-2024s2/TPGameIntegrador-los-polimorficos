@@ -132,7 +132,7 @@ class Calabera inherits Monstruo(vida = 2.5){
             self.morir(id, nivel)
     }
 }
-
+//Hacer que funcione el rey duende
 class ReyDuende inherits Monstruo{
     var accion = ""
     var animacion = 1
@@ -145,26 +145,21 @@ class ReyDuende inherits Monstruo{
     method ataqueEspecial(id, mapaNivel){
         game.onTick(10500, "saltoSupremo", {
             game.removeTickEvent("jefePerseguirCoco")
-            self.superSalto(id, mapaNivel)
+            game.onTick(500, "ataqueEspecial", {self.superSalto(id, mapaNivel)})
+            monstruosNivel2.add(game.addVisual(new Calabera()))
             })
-    }
+        }
 
     method superSalto(id, mapaNivel){
         accion = "Salto"
         animacion += 1
-        if(animacion == 7)
-            game.removeTickEvent("saltoSupremo")
-            self.animacionFinal()
-            self.perseguirACoco(id, mapaNivel)
+        if(animacion == 11)
+            game.removeTickEvent("ataqueEspecial")
+            animacion = 1
+            accion = ""
+            game.onTick(900, "jefePerseguirCoco", {self.perseguirPersonaje(mapaNivel)})
     }
 
-    method animacionFinal(){
-        animacion = 3
-        game.flushEvents(500) //Si esto me funciona seria como un time.sleep()
-        monstruosNivel2.addAll(new Calabera(), new Calabera())
-        animacion = 1
-        
-    }
 }
 
 class Vidas{
