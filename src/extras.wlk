@@ -1,11 +1,13 @@
 import personaje.*
 import game.*
 import juego.*
+import niveles.*
 class Monstruo{
     var property position = game.at(x, y)
     const x = (3.. game.width()-6).anyOne()
     const y = (3.. game.height()-6).anyOne()
     var vida = 3
+    var nivelActual
     //implementamos una variable para la velocidad de monstruo
     var velocidad = 900
     var dir = "Izq"
@@ -17,11 +19,12 @@ class Monstruo{
         game.onTick(velocidad, "perseguirCoco" + id, {self.perseguirPersonaje(mapaNivel)})
     }
 
-    method morir(id) {
-      if(self.estaMuerto()){
-        game.removeVisual(self)
-        game.removeTickEvent("perseguirCoco" + id)
-      }
+    method morir(id, nivel) {
+        if(self.estaMuerto()){
+            game.removeVisual(self)
+            game.removeTickEvent("perseguirCoco" + id)
+            nivelActual.enemigos().remove(id)
+        }
     }
 
     method perseguirPersonaje(mapaNivel){
@@ -64,7 +67,7 @@ class Monstruo{
     method recibirAtaque(id){
         vida = 0.max(vida - 0.5)
         if (self.estaMuerto())
-            self.morir(id)
+            self.morir(id, nivelActual)
     }
 
     method colisionarConCoco(){
@@ -127,7 +130,7 @@ class Calabera inherits Monstruo(vida = 2.5){
     override method recibirAtaque(id){
         vida = 0.max(vida - 0.9)
         if (self.estaMuerto())
-            self.morir(id)
+            self.morir(id, nivelActual)
     }
 }
 
@@ -159,7 +162,7 @@ class JefeDuende inherits Monstruo{
     method animacionFinal(){
         animacion = 3
         game.flushEvents(500) //Si esto me funciona seria como un time.sleep()
-        monstruosNivel2.addAll(new Calabera(), new Calabera())
+        monstruosNivel2.addAll(new Calabera(nivelActual=nivel2), new Calabera(nivelActual=nivel2))
         animacion = 1
         
     }

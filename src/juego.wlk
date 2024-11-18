@@ -2,8 +2,8 @@ import personaje.*
 import extras.*
 import niveles.*
 
-const monstruosNivel1 =  [new Monstruo(),  new Monstruo(), new Calabera()]
-const monstruosNivel2 =  (0..2).map({num => new Monstruo()})
+const monstruosNivel1 =  [new Monstruo(nivelActual=nivel1),  new Monstruo(nivelActual=nivel1), new Calabera(nivelActual=nivel1)]
+const monstruosNivel2 =  (0..2).map({num => new Monstruo(nivelActual=nivel2)})
 const pocionesNivel1 = [new Pociones(x=10,y=11), new Pociones(x=4,y=5),new Pociones(x=12,y=4)]
 const pocionesNivel2 = [] // cuando este listo el nivel 2 agrego las positions de las pociones 
 
@@ -13,8 +13,8 @@ const pocionesNivel2 = [] // cuando este listo el nivel 2 agrego las positions d
 //Hacer un metodo "misionCumplida()" o algo por el estilo, con la logica de terminado de nivel
 
 //queda:
-//Que coco pierda vidas
-//Despues que esas vidas que perdio se vean reflejadas en los corazones
+//Que coco pierda vidas (hecho)
+//Despues que esas vidas que perdio se vean reflejadas en los corazones (hecho)
 //Que pierda si se queda sin vidas, y que la pantalla de game over lo mande a la pantalla de inicio
 //Que compruebe si coco paso el nivel
 //El jefe que estoy haciendo y la logica de habilidad especial
@@ -112,8 +112,8 @@ object juego{
 
   method colisionarConCoco(){
     game.onCollideDo(coco, {p =>
-     p.colisionarConCoco()
-     if(!coco.estaVivo()) self.gameOver()
+    p.colisionarConCoco()
+    if(!coco.estaVivo()) self.gameOver()
     })
   }
 
@@ -142,7 +142,7 @@ object juego{
     self.atacarAMonstruo(nivel)
     self.consultarVida()
     self.movimientoPersonaje()
-    game.onTick(2000, "comprobar", {if(objetoNivel.enemigos().size()  ==  0) self.siguienteNivel()}) //Cuando funcione cambiar nivel1 para que funcione para todos
+    game.onTick(200, "comprobar", {if(objetoNivel.enemigos().size()  ==  0) self.siguienteNivel()}) //Cuando funcione cambiar nivel1 para que funcione para todos
   }   
 
   method atacarAMonstruo(nivel) {
