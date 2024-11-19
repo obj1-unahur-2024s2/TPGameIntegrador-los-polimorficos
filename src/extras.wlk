@@ -139,7 +139,7 @@ class ReyDuende inherits Monstruo(vida = 3, velocidad = 1300){
     override method image() = "reyDuende"+ accion + animacion +".png" 
     override method perseguirACoco(id, mapaNivel){
         game.onTick(velocidad, "jefePerseguirCoco", {self.perseguirPersonaje(mapaNivel)})
-        self.ataqueEspecial(id, mapaNivel)
+        //self.ataqueEspecial(id, mapaNivel)
     }
 
     override method morir(id, nivel) {
@@ -158,10 +158,10 @@ class ReyDuende inherits Monstruo(vida = 3, velocidad = 1300){
     }
 
     method ataqueEspecial(id, mapaNivel){
-        game.onTick(3000, "saltoSupremo", { //tiempo de prueba
+        game.onTick(7000, "saltoSupremo", { //tiempo de prueba
             // game.removeTickEvent("jefePerseguirCoco")
             // game.onTick(500, "ataqueEspecial", {self.superSalto(id, mapaNivel)})//cambiar
-            monstruosNivel2.add(game.addVisual(new Calabera()))
+            monstruosNivel2.add(game.addVisual(new Monstruo()))
             })
         }
 

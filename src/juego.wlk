@@ -2,10 +2,10 @@ import personaje.*
 import extras.*
 import niveles.*
 
-const monstruosNivel1 =  [new Monstruo(),  new Monstruo(), new Calabera()]
-const monstruosNivel2 =  [new ReyDuende()]
+const monstruosNivel1 =  [new Monstruo(),  new Monstruo(), new Calabera(), new Calabera()]
+const monstruosNivel2 =  [new ReyDuende(), new Monstruo(), new Calabera()]
 const pocionesNivel1 = [new Pociones(x=10,y=11), new Pociones(x=4,y=5),new Pociones(x=12,y=4)]
-const pocionesNivel2 = [] // cuando este listo el nivel 2 agrego las positions de las pociones 
+const pocionesNivel2 = [new Pociones(x=10,y=11)] // cuando este listo el nivel 2 agrego las positions de las pociones 
 
 //Mejorar los bloques, que estos sean objetos
 //Tal vez cambiar lo del id, que cada monstruo sepa su id (yo lo dejaria como esta)
@@ -54,11 +54,6 @@ object juego{
   }
 
   method prepararJuego(){
-    game.title("CocoAdventure")
-    game.width(16)
-    game.height(16)
-	  game.cellSize(32)
-    game.boardGround("fondoNegro1.jpg")
     self.crearNivel(objetoNivel)
   }
 
@@ -131,10 +126,10 @@ object juego{
 
   method perseguirACoco(monstruosNivel){
     //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
-    monstruosNivel.enemigos().forEach({m =>
-     const id = m.identity().toString()
-     game.addVisual(m) 
-     m.perseguirACoco(id, monstruosNivel)
+    monstruosNivel.enemigos().forEach({m => 
+      const id = m.identity().toString()
+      game.addVisual(m)
+      m.perseguirACoco(id, monstruosNivel)
      })
   }
 
@@ -142,8 +137,12 @@ object juego{
     self.atacarAMonstruo(nivel)
     self.consultarVida()
     self.movimientoPersonaje()
-    game.onTick(200, "comprobar", {if(objetoNivel.enemigos().size()  ==  0 and coco.position() == game.at(13, 8)) self.siguienteNivel()}) //Cuando funcione cambiar nivel1 para que funcione para todos
+    game.onTick(200, "comprobar", {self.pasoDeNivel()}) //Cuando funcione cambiar nivel1 para que funcione para todos
   }   
+
+  method pasoDeNivel(){
+    if(objetoNivel.enemigos().size()  ==  0 and coco.position() == game.at(13, 8)) self.siguienteNivel()
+  }
 
   method atacarAMonstruo(nivel) {
     keyboard.e().onPressDo({
@@ -166,7 +165,7 @@ object juego{
     self.finalizarNivel()
     if ((nivelActual == 2)){
       objetoNivel = nivel2
-       self.prepararJuego()
+      self.prepararJuego()
     }else
       objetoNivel = nivel1
       game.addVisual(imagenDeVictoria)
@@ -187,10 +186,6 @@ object juego{
     game.addVisual(p) 
   })
   }
-
-    // method tomarPociones() {
-    //   game.onCollideDo(coco, {p => p.curar()})
-    // }
 
   method movimientoPersonaje(){
     keyboard.right().onPressDo({coco.irHaciaDerecha(objetoNivel)})
