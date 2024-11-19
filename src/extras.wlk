@@ -60,7 +60,8 @@ class Monstruo{
         else if(coco.position().y() < self.position().y())
             mover = mover.down(1)
         return mover
-    }    
+    }
+
     method estaMuerto() = vida == 0
 
     method recibirAtaque(id, nivel){
@@ -227,7 +228,7 @@ class Pociones {
     method estaUsada() = vida ==0
 }
 object imagenInicial{ 
-    var property position = game.at(0, 0)
+    var property position = game.center()
      var property image = "fondoInicio.png" 
 }
 

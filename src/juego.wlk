@@ -12,7 +12,6 @@ const pocionesNivel2 = [new Pociones(x=10,y=11)] // cuando este listo el nivel 2
 //Hacer un metodo "misionCumplida()" o algo por el estilo, con la logica de terminado de nivel
 
 //queda:
-// Que la pantalla de game over lo mande a la pantalla de inicio
 //El jefe y la logica de habilidad especial
 //(Si hay tiempo le podriamos poner una barra de vida al jefe)
 //Al terminar el nivel dos poder ganar
@@ -73,6 +72,9 @@ object juego{
     self.colisionarConCoco()
     self.cocoMorir()
   }
+
+  // method imagenBug() = game.allVisuals().filter({imagen => imagen.position() == game.at(2,2)}) Intento de encontrar el visual
+
 
   method crearVidas(){
     const vida3 = new Vidas(x=15, y=15)
@@ -146,7 +148,7 @@ object juego{
   }   
 
   method pasoDeNivel(){
-    if(objetoNivel.enemigos().size()  ==  0 and coco.position() == game.at(13, 8)) self.siguienteNivel()
+    if(objetoNivel.enemigos().all({m => m.estaMuerto()}) and coco.position() == game.at(13, 8)) self.siguienteNivel() // or nivelObjeto == nivel2
   }
 
   method atacarAMonstruo(nivel) {
@@ -170,17 +172,23 @@ object juego{
     self.finalizarNivel()
     if ((nivelActual == 2)){
       objetoNivel = nivel2
-      self.prepararJuego()
+      self.crearNivel(objetoNivel)
     }else
-      objetoNivel = nivel1
-      game.addVisual(imagenDeVictoria)
+      self.pantallaGanaste()
+  }
+
+  method pantallaGanaste(){
+    game.addVisual(imagenDeVictoria)
+    keyboard.space().onPressDo({
+      game.removeVisual(imagenDeVictoria)
+      self.iniciarJuego()
+    })
   }
 
   method finalizarNivel(){
       nivelIniciado = false
       objetoNivel.sonidoNivel().pause()
       game.clear()
-      coco.posicionInicial(nivelActual)
   }
 
   //method cocoEnPosicionDeSalida() = (coco.position().x()  == 13) and (coco.position().y() == 7)
