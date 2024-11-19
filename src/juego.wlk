@@ -39,6 +39,7 @@ object juego{
         musicaInicio.stop()
         game.removeVisual(imagenInicial)//Hacer lo de la imagen inicial
         nivelActual = 1
+        objetoNivel = nivel1
         self.prepararJuego()
         self.nivelIniciado(true)
     }
@@ -70,6 +71,7 @@ object juego{
     self.perseguirACoco(nivel) //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
     self.agregarPociones(nivel)  
     self.colisionarConCoco()
+    self.cocoMorir()
   }
 
   method crearVidas(){
@@ -108,20 +110,23 @@ object juego{
   method colisionarConCoco(){
     game.onCollideDo(coco, {p =>
      p.colisionarConCoco()
-     if(!coco.estaVivo()) self.gameOver()
     })
+  }
+
+  method cocoMorir(){
+    game.onTick(500, "gameOver", {if(!coco.estaVivo()) self.gameOver()})
   }
 
   method gameOver(){
     //Logica de game over
     self.finalizarNivel()
-    self.iniciarJuego()
-    // game.addVisual(imagenGameOver)
+    game.addVisual(imagenGameOver)
+    nivelIniciado = false
     //PONER MUSICA
-    //keyboard.space().onPressDo(){
-    //  game.removeVisual(imagenGameOver)
-    //  self.iniciarJuego()
-    //}
+    keyboard.space().onPressDo({
+      game.removeVisual(imagenGameOver)
+      self.iniciarJuego()
+      })
   }
 
   method perseguirACoco(monstruosNivel){
