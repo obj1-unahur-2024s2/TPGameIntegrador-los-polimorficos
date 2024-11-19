@@ -126,9 +126,20 @@ object juego{
     nivelIniciado = false
     //PONER MUSICA
     keyboard.space().onPressDo({
-      game.removeVisual(imagenGameOver)
+      self.reiniciarJuego()
       self.iniciarJuego()
       })
+  }
+
+  method reiniciarJuego(){
+    nivelActual = 0
+    self.recuperarVidaDeMonstruos()
+    coco.recuperarVida()
+  }
+
+  method recuperarVidaDeMonstruos(){
+    nivel1.enemigos().forEach({m => m.reiniciarVidas()})
+    nivel2.enemigos().forEach({m => m.reiniciarVidas()})
   }
 
   method perseguirACoco(monstruosNivel){
@@ -187,8 +198,8 @@ object juego{
 
   method finalizarNivel(){
       nivelIniciado = false
-      objetoNivel.sonidoNivel().pause()
       game.clear()
+      objetoNivel.sonidoNivel().pause()
   }
 
   //method cocoEnPosicionDeSalida() = (coco.position().x()  == 13) and (coco.position().y() == 7)

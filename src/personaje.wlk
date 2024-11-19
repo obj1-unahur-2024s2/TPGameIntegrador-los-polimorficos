@@ -8,7 +8,7 @@ object coco {
   var imagen = "Espada" // para poder cambiar a animacion de movimiento
   var mov = 0
 
-  method image() = if(self.estaVivo())"coco"+ imagen + mov +".png" else "cocoMuerto.png" 
+  method image() = "coco"+ imagen + mov +".png"
 
   method atacar() {game.onTick(250, "ataque", {self.animacionEspada()})}
   method irA(nuevaPosicion) {position = nuevaPosicion}

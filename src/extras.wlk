@@ -7,12 +7,11 @@ class Monstruo{
     const x = (3.. game.width()-6).anyOne()
     const y = (3.. game.height()-6).anyOne()
     var vida = 3
-    //implementamos una variable para la velocidad de monstruo
     var velocidad = 900
     var dir = "Izq"
     var pos = 1
 
-    method image() = if(!self.estaMuerto())"slayerCamina" + dir + pos + ".png" else "corazonMuerto.png"
+    method image() = "slayerCamina" + dir + pos + ".png" 
 
     method perseguirACoco(id, mapaNivel){
         game.onTick(velocidad, "perseguirCoco" + id, {self.perseguirPersonaje(mapaNivel)})
@@ -73,9 +72,9 @@ class Monstruo{
         coco.perderVida()
     }
 
-    // method atacarACoco(){
-        
-    // }
+    method reiniciarVidas(){
+        vida = 3
+    }
 }
 
 class Calabera inherits Monstruo(vida = 2.5){
@@ -131,9 +130,13 @@ class Calabera inherits Monstruo(vida = 2.5){
         if (self.estaMuerto())
             self.morir(id, nivel)
     }
+
+    override method reiniciarVidas(){
+        vida = 2.5
+    }
 }
 //Hacer que funcione el rey duende
-class ReyDuende inherits Monstruo(vida = 3, velocidad = 1300){
+class ReyDuende inherits Monstruo(vida = 6, velocidad = 1300){
     var accion = ""
     var animacion = 1
     override method image() = "reyDuende"+ accion + animacion +".png" 
@@ -175,6 +178,10 @@ class ReyDuende inherits Monstruo(vida = 3, velocidad = 1300){
             game.onTick(velocidad, "jefePerseguirCoco", {self.perseguirPersonaje(mapaNivel)})
     }
 
+    override method reiniciarVidas(){
+        vida = 6
+    }
+
 }
 
 class Vidas{
@@ -199,7 +206,6 @@ class Pociones {
     var x
     var y 
     const imagen = "pocionCorazon.png"
-    var property vida = 1
 
     method image() = imagen
 
@@ -208,23 +214,12 @@ class Pociones {
     }
 
     method curar() {
-        if(coco.vidas() < 3 and vida > 0){
+        if(coco.vidas() < 3){
             coco.recuperarVida()
-            vida -= 1
-            self.desaparecer()
+            game.removeVisual(self)
             game.sound("tomarPocion.mp3").play()
         }
-    
     }
-
-    method desaparecer() {
-        if (self.estaUsada()){
-            game.removeVisual(self)
-        }
-    
-    }
-
-    method estaUsada() = vida ==0
 }
 object imagenInicial{ 
     var property position = game.center()
