@@ -22,7 +22,6 @@ class Monstruo{
         if(self.estaMuerto()){
             game.removeVisual(self)
             game.removeTickEvent("perseguirCoco" + id)
-            nivel.enemigos().remove(self)
         }
     }
 

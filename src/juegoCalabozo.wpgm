@@ -7,7 +7,6 @@ program CalabozoGame {
 	
 	juego.iniciarJuego()
 	game.showAttributes(coco) //Debug
-	
 
 	game.start()
 }   

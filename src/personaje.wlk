@@ -44,34 +44,25 @@ object coco {
   //ver
 
   method irHaciaDerecha(mapaNivel){
-    const positionX = position.x()
-    const positionY = position.y()
-    if((mapaNivel.bloquesMapa().murosNivel().any({muro => muro.get(0) == positionX and muro.get(1) == positionY})) or (positionX == 14))
-      position = game.at(positionX -1, positionY)
-      //position = position.left(1) posible cambio
+    if(self.estaEnMuro(mapaNivel))
+      position = position.left(1)
   }
 
   method irHaciaIzquierda(mapaNivel){
-    const positionX = position.x()
-    const positionY = position.y()
-    if((mapaNivel.bloquesMapa().murosNivel().any({muro => muro.get(0) == positionX and muro.get(1) == positionY})) or (positionX == 1))
-      position = game.at(positionX + 1, positionY)
+    if(self.estaEnMuro(mapaNivel))
+      position = position.right(1)
   }
 
   method irHaciaArriba(mapaNivel){
-    const positionX = position.x()
-    const positionY = position.y()
-    if((mapaNivel.bloquesMapa().murosNivel().any({muro => muro.get(0) == positionX and muro.get(1) == positionY})) or (positionY == 12))
-      position = game.at(positionX, positionY -1)
+    if(self.estaEnMuro(mapaNivel))
+      position = position.down(1)
   }
 
   method irHaciaAbajo(mapaNivel){
-    const positionX = position.x()
-    const positionY = position.y()
-    if((mapaNivel.bloquesMapa().murosNivel().any({muro => muro.get(0) == positionX and muro.get(1) == positionY})) or (positionY == 2))
-      position = game.at(positionX, positionY + 1)
+    if(self.estaEnMuro(mapaNivel))
+      position = position.up(1)
   }
 
-  //method estaEnMuro() = (mapaNivel.bloquesMapa().murosNivel().any({muro => muro.get(0) == positionX and muro.get(1) == positionY}))
+  method estaEnMuro(mapaNivel) = (mapaNivel.bloquesMapa().murosNivel().any({muro => muro.get(0) == self.position().x() and muro.get(1) == self.position().y()}))
   
 }
