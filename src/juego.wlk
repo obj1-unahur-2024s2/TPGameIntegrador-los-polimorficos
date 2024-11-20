@@ -5,16 +5,9 @@ import niveles.*
 const monstruosNivel1 =  [new Monstruo(),  new Monstruo(), new Calabera(), new Calabera()]
 const monstruosNivel2 =  [new ReyDuende(), new Monstruo(), new Calabera()]
 const pocionesNivel1 = [new Pociones(x=10,y=11), new Pociones(x=4,y=5),new Pociones(x=12,y=4)]
-const pocionesNivel2 = [new Pociones(x=10,y=11)] // cuando este listo el nivel 2 agrego las positions de las pociones 
+const pocionesNivel2 = [new Pociones(x=10,y=11), new Pociones(x=11, y=3), new Pociones(x=4, y=3)] 
 
-//Mejorar los bloques, que estos sean objetos
-//Tal vez cambiar lo del id, que cada monstruo sepa su id (yo lo dejaria como esta)
-//Hacer un metodo "misionCumplida()" o algo por el estilo, con la logica de terminado de nivel
-
-//queda:
-//El jefe y la logica de habilidad especial
 //(Si hay tiempo le podriamos poner una barra de vida al jefe)
-//Al terminar el nivel dos poder ganar
 
 object juego{
   var nivelActual = 0 
