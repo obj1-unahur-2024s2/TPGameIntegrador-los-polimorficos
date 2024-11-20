@@ -17,7 +17,7 @@ class Monstruo{
         game.onTick(velocidad, "perseguirCoco" + id, {self.perseguirPersonaje(mapaNivel)})
     }
 
-    method morir(id, nivel) {
+    method morir(id) {
         if(self.estaMuerto()){
             game.removeVisual(self)
             game.removeTickEvent("perseguirCoco" + id)
@@ -62,10 +62,10 @@ class Monstruo{
 
     method estaMuerto() = vida == 0
 
-    method recibirAtaque(id, nivel){
+    method recibirAtaque(id){
         vida = 0.max(vida - 0.5)
         if (self.estaMuerto())
-            self.morir(id, nivel)
+            self.morir(id)
     }
 
     method colisionarConCoco(){
@@ -125,57 +125,26 @@ class Calabera inherits Monstruo(vida = 2.5){
         else{direccion += 1}
     }
 
-    override method recibirAtaque(id, nivel){
+    override method recibirAtaque(id){
         vida = 0.max(vida - 0.9)
         if (self.estaMuerto())
-            self.morir(id, nivel)
+            self.morir(id)
     }
 
     override method reiniciarVidas(){
         vida = 2.5
     }
 }
-//Hacer que funcione el rey duende
+
 class ReyDuende inherits Monstruo(vida = 6, velocidad = 1300){
-    var accion = ""
-    var animacion = 1
-    override method image() = "reyDuende"+ accion + animacion +".png" 
-    override method perseguirACoco(id, mapaNivel){
-        game.onTick(velocidad, "jefePerseguirCoco", {self.perseguirPersonaje(mapaNivel)})
-        //self.ataqueEspecial(id, mapaNivel)
-    }
+    override method image() = "reyDuendeCaminar"+ dir + pos + ".png" 
 
-    override method morir(id, nivel) {
-        if(self.estaMuerto()){
-            game.removeVisual(self)
-            game.removeTickEvent("perseguirCoco" + id)
-            game.removeTickEvent("saltoSupremo")
-            nivel.enemigos().remove(self)
-        }
-    }
+    
 
-    override method recibirAtaque(id, nivel){
+    override method recibirAtaque(id){
         vida = 0.max(vida - 0.3)
         if (self.estaMuerto())
-            self.morir(id, nivel)
-    }
-
-    method ataqueEspecial(id, mapaNivel){
-        game.onTick(7000, "saltoSupremo", { //tiempo de prueba
-            // game.removeTickEvent("jefePerseguirCoco")
-            // game.onTick(500, "ataqueEspecial", {self.superSalto(id, mapaNivel)})//cambiar
-            monstruosNivel2.add(game.addVisual(new Monstruo()))
-            })
-        }
-
-    method superSalto(id, mapaNivel){
-        accion = "Salto"
-        animacion += 1
-        if(animacion == 11)
-            game.removeTickEvent("ataqueEspecial")
-            animacion = 1
-            accion = ""
-            game.onTick(velocidad, "jefePerseguirCoco", {self.perseguirPersonaje(mapaNivel)})
+            self.morir(id)
     }
 
     override method reiniciarVidas(){

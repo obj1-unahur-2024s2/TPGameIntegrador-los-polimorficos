@@ -6,7 +6,7 @@ import juego.*
 const musicaNivel1 = game.sound("musicaNivel1.wav") 
 const musicaNivel2 = game.sound("musicaNivel2.wav") 
 
-const nivel1 = new Nivel(nivel=1, enemigos = monstruosNivel1, bloquesMapa = bloquesMapa1, image = fondoNivel1, sonidoNivel = musicaNivel1,pociones = pocionesNivel1)//crear todo lo que va adentro
+const nivel1 = new Nivel(nivel=1, enemigos = monstruosNivel1, bloquesMapa = bloquesMapa1, image = fondoNivel1, sonidoNivel = musicaNivel1, pociones = pocionesNivel1)//crear todo lo que va adentro
 
 const nivel2 = new Nivel(nivel = 2, enemigos = monstruosNivel2, bloquesMapa = bloquesMapa2, image = fondoNivel2, sonidoNivel = musicaNivel2, pociones = pocionesNivel2) //crear todo lo que va adentro
 const todosLosNiveles = [nivel1, nivel2]

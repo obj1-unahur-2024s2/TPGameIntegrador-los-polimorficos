@@ -49,7 +49,7 @@ object juego{
     game.width(16)
     game.height(16)
 	  game.cellSize(32)
-    game.boardGround("fondoNegro1.jpg")//fondo.jpg
+    game.boardGround("fondoOscuro.png")//fondo.jpg
     game.addVisual(imagenInicial)
   }
 
@@ -66,7 +66,7 @@ object juego{
     game.addVisualCharacter(coco)
     coco.posicionInicial(nivelActual)
     self.crearVidas()
-    self.configurarTeclado(nivel)
+    self.configurar(nivel)
     self.perseguirACoco(nivel) //Lista con los monstruos de cada nivel, que aparezcan y que lo sigan
     self.agregarPociones(nivel)  
     self.colisionarConCoco()
@@ -124,18 +124,14 @@ object juego{
     self.finalizarNivel()
     game.addVisual(imagenGameOver)
     nivelIniciado = false
-    //PONER MUSICA
-    keyboard.space().onPressDo({
-      self.reiniciarJuego()
-      self.iniciarJuego()
-      })
   }
 
-  method reiniciarJuego(){
-    nivelActual = 0
-    self.recuperarVidaDeMonstruos()
-    coco.recuperarVida()
-  }
+  //method reiniciarJuego(){
+  //  nivelActual = 1
+  //  objetoNivel = nivel1
+  //  self.recuperarVidaDeMonstruos()
+  //  coco.recuperarVida()
+  //}
 
   method recuperarVidaDeMonstruos(){
     nivel1.enemigos().forEach({m => m.reiniciarVidas()})
@@ -151,23 +147,25 @@ object juego{
      })
   }
 
-  method configurarTeclado(nivel){
+  method configurar(nivel){
     self.atacarAMonstruo(nivel)
     self.consultarVida()
     self.movimientoPersonaje()
-    game.onTick(200, "comprobar", {self.pasoDeNivel()}) //Cuando funcione cambiar nivel1 para que funcione para todos
+    game.onTick(200, "comprobar", {self.pasoDeNivel()})
   }   
 
   method pasoDeNivel(){
-    if(objetoNivel.enemigos().all({m => m.estaMuerto()}) and coco.position() == game.at(13, 8)) self.siguienteNivel() // or nivelObjeto == nivel2
+    if(self.todosLosEnemigosMuertos(objetoNivel) and (coco.position() == game.at(13, 8) or objetoNivel == nivel2)) self.siguienteNivel()
   }
+
+  method todosLosEnemigosMuertos(nivel) = nivel.enemigos().all({m => m.estaMuerto()})
 
   method atacarAMonstruo(nivel) {
     keyboard.e().onPressDo({
       coco.atacar()
       nivel.enemigos().forEach({m => 
         const id  = m.identity().toString()
-        if(m.position() == coco.position()) m.recibirAtaque(id, nivel)
+        if(m.position() == coco.position()) m.recibirAtaque(id)
       })
     })
   }
@@ -181,8 +179,8 @@ object juego{
   method siguienteNivel(){
     nivelActual += 1
     self.finalizarNivel()
+    objetoNivel = nivel2
     if ((nivelActual == 2)){
-      objetoNivel = nivel2
       self.crearNivel(objetoNivel)
     }else
       self.pantallaGanaste()
@@ -190,17 +188,14 @@ object juego{
 
   method pantallaGanaste(){
     game.addVisual(imagenDeVictoria)
-    keyboard.space().onPressDo({
-      game.removeVisual(imagenDeVictoria)
-      self.iniciarJuego()
-    })
   }
 
   method finalizarNivel(){
-      nivelIniciado = false
       game.clear()
       objetoNivel.sonidoNivel().pause()
+      nivelIniciado = false
   }
+
 
   //method cocoEnPosicionDeSalida() = (coco.position().x()  == 13) and (coco.position().y() == 7)
   
