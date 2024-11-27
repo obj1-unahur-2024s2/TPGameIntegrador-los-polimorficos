@@ -154,9 +154,9 @@ class ReyDuende inherits Monstruo(vida = 6, velocidad = 1300){
 }
 
 class Vidas{
-  var property position = game.at(x, y)
-  var property x
-  var property y
+  var property position //= game.at(x, y)
+//   var property x
+//   var property y
   var imagen = "corazon.png"
 
   method image() = imagen
@@ -171,9 +171,9 @@ class Vidas{
 }
 class Pociones {
   
-    var property position = game.at(x, y)
-    var x
-    var y 
+    var property position //= game.at(x, y)
+    // var x
+    // var y 
     const imagen = "pocionCorazon.png"
 
     method image() = imagen

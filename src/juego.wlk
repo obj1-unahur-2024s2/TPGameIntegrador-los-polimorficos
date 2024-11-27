@@ -4,8 +4,8 @@ import niveles.*
 
 const monstruosNivel1 =  [new Monstruo(),  new Monstruo(), new Calabera(), new Calabera()]
 const monstruosNivel2 =  [new ReyDuende(), new Monstruo(), new Calabera()]
-const pocionesNivel1 = [new Pociones(x=10,y=11), new Pociones(x=4,y=5),new Pociones(x=12,y=4)]
-const pocionesNivel2 = [new Pociones(x=10,y=11), new Pociones(x=11, y=3), new Pociones(x=4, y=3)] 
+const pocionesNivel1 = [new Pociones(position=game.at(10, 11)), new Pociones(position=game.at(4, 5)),new Pociones(position=game.at(12, 4))]
+const pocionesNivel2 = [new Pociones(position=game.at(10, 11)), new Pociones(position=game.at(11, 3)), new Pociones(position=game.at(4, 3))] 
 
 //(Si hay tiempo le podriamos poner una barra de vida al jefe)
 
@@ -70,9 +70,9 @@ object juego{
 
 
   method crearVidas(){
-    const vida3 = new Vidas(x=15, y=15)
-    const vida2 = new Vidas(x=14, y=15)
-    const vida1 = new Vidas(x=13, y=15)
+    const vida3 = new Vidas(position=game.at(15, 15))
+    const vida2 = new Vidas(position=game.at(14, 15))
+    const vida1 = new Vidas(position=game.at(13, 15))
     game.addVisual(vida3)
     game.addVisual(vida2)
     game.addVisual(vida1)
@@ -104,7 +104,7 @@ object juego{
 
   method colisionarConCoco(){
     game.onCollideDo(coco, {p =>
-     p.colisionarConCoco()
+      p.colisionarConCoco()
     })
   }
 
@@ -204,5 +204,10 @@ object juego{
     keyboard.left().onPressDo({coco.irHaciaIzquierda(objetoNivel)})
     keyboard.up().onPressDo({coco.irHaciaArriba(objetoNivel)})
     keyboard.down().onPressDo({coco.irHaciaAbajo(objetoNivel)})
+
+    // keyboard.right().onPressDo({derecha.irHaciaDerecha()})
+    // keyboard.left().onPressDo({izquierda.irHaciaIzquierda()})
+    // keyboard.up().onPressDo({arriba.irHaciaArriba()})
+    // keyboard.down().onPressDo({abajo.irHaciaAbajo()})
   }
 }

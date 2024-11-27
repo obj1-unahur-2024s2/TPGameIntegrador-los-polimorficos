@@ -1,5 +1,6 @@
 import extras.*
 import niveles.*
+import juego.*
 object coco {
   var vidas = 3
   method vidas() = vidas 
@@ -66,3 +67,28 @@ object coco {
   method estaEnMuro(mapaNivel) = (mapaNivel.bloquesMapa().murosNivel().any({muro => muro.get(0) == self.position().x() and muro.get(1) == self.position().y()}))
   
 }
+
+// object derecha {
+//   method irHaciaDerecha(){
+//     if(coco.estaEnMuro())
+//       coco.position.left(1)
+//   }
+// }
+// object izquierda {
+//   method irHaciaIzquierda(){
+//     if(coco.estaEnMuro())
+//       coco.position.right(1)
+//   }
+// }
+// object arriba {
+//   method irHaciaArriba(){
+//     if(coco.estaEnMuro())
+//       coco.position.down(1)
+//   }
+// }
+// object abajo {
+//   method irHaciaAbajo(){
+//     if(coco.estaEnMuro())
+//       coco.position.up(1)
+//   }
+// }
